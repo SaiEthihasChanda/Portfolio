@@ -1,7 +1,7 @@
 /* Project pages. Colour scheme comes from per-page CSS variables (set on <body> by tools/build_projects.py);
    everything else (HUD frame, mono labels, brackets, layout) is shared so every page keeps the site's theme. */
 :root{
-  --bg:#fff;--ink:#0b0b0c;--ink-rgb:11,11,12;--accent:#ff4d00;--accent-lt:#ff7a3d;--accent2:var(--accent);
+  --bg:#fff;--ink:#0b0b0c;--ink-rgb:11,11,12;--accent:#dc143c;--accent-lt:#ff4d6d;--accent2:var(--accent);
   --bn:#0b0b0c;--bn-rgb:11,11,12;
   --mute:rgba(var(--ink-rgb),.55);--line:rgba(var(--ink-rgb),.12);
   --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
