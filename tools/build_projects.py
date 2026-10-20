@@ -16,8 +16,8 @@ SCHEMES = {
 }
 
 # The installer is too big for the repo (GitHub's limit is 100 MB per file), so it is attached to a GitHub Release.
-# Change the repo name here if yours is not called "portfolio". While testing on localhost the button uses the local file.
-DOWNLOAD_URL = "https://github.com/SaiEthihasChanda/portfolio/releases/latest/download/ShapeShifter-Setup.exe"
+# Change the repo name here if your repo is not called "Portfolio". While testing on localhost the button uses the local file.
+DOWNLOAD_URL = "https://github.com/SaiEthihasChanda/Portfolio/releases/latest/download/ShapeShifter-Setup.exe"
 
 PROJECTS = [
     dict(
