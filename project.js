@@ -44,7 +44,7 @@ if (bv){
   let userPaused = false;
   const label = () => {
     pBtn.innerHTML = `<i class="led"></i>${bv.paused ? 'PLAY' : 'PAUSE'}`;
-    sBtn.innerHTML = `<i class="led"></i>${bv.muted ? (userMuted ? 'SOUND OFF' : 'SOUND OFF · CLICK ANYWHERE FOR SOUND') : 'SOUND ON'}`;
+    sBtn.innerHTML = `<i class="led"></i>${bv.muted ? 'SOUND OFF' + (userMuted ? '' : '<span class="t2"> · CLICK ANYWHERE FOR SOUND</span>') : 'SOUND ON'}`;
     sBtn.classList.toggle('hint', bv.muted && !userMuted);
   };
   // Sound is ON by default. Browsers only allow that in some cases (e.g. you already interacted with the site), so if
@@ -134,6 +134,9 @@ const banner = $('.banner'), bnMedia = $('.bn-media'), bnContent = $('.bn-conten
 const gal = $('.gal'), strip = $('.strip'), galBar = $('.gal-bar i');
 const wsec = $('.wheel-sec'), toEl = $('#to');
 let lastTo = '', lastDark = null, lastDarkB = null;
+const fadeProbe = document.createElement('div');   // invisible element whose height is --fade, so JS and CSS agree
+fadeProbe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;width:0;height:var(--fade)';
+document.body.append(fadeProbe);
 
 function frame(now){
   const y = scrollY, H = innerHeight, max = Math.max(1, document.documentElement.scrollHeight - H);
@@ -149,7 +152,7 @@ function frame(now){
   bnMedia.style.transform = `translate3d(0,${(y * .28).toFixed(1)}px,0) scale(${(1 + bp * .08).toFixed(4)})`;
   bnContent.style.transform = `translate3d(0,${(y * .12).toFixed(1)}px,0)`;
   bnContent.style.opacity = (1 - bp * 1.15).toFixed(3);
-  const fadePx = Math.min(240, Math.max(120, H * .22));            // same clamp() as --fade in project.css
+  const fadePx = fadeProbe.offsetHeight || 150;                      // the real, resolved value of --fade
   const dark = y < bh - fadePx * .7 - 60, darkB = bh - y - fadePx * .6 > H - 40;
   if (dark !== lastDark){ document.body.classList.toggle('dark-top', dark); lastDark = dark; }
   if (darkB !== lastDarkB){ document.body.classList.toggle('dark-bottom', darkB); lastDarkB = darkB; }
@@ -160,14 +163,14 @@ function frame(now){
   }
 
   if (gal){                                              // vertical scroll drives the horizontal strip
-    const r = gal.getBoundingClientRect(), gp = clamp(-r.top / (gal.offsetHeight - H));
+    const r = gal.getBoundingClientRect(), gp = clamp(-r.top / Math.max(1, gal.offsetHeight - H));
     const dist = Math.max(0, strip.scrollWidth - innerWidth);
     strip.style.transform = `translate3d(${(-gp * dist).toFixed(1)}px,0,0)`;
     galBar.style.transform = `scaleX(${gp.toFixed(4)})`;
   }
 
   if (sectionWheel && wsec){                             // rings turn and a format gets picked as you scroll
-    const r = wsec.getBoundingClientRect(), wp = clamp(-r.top / (wsec.offsetHeight - H));
+    const r = wsec.getBoundingClientRect(), wp = clamp(-r.top / Math.max(1, wsec.offsetHeight - H));
     sectionWheel.set(wp * 360 + t * 2, 0); sectionWheel.set(-(wp * 360 + 20) - t * 2, 1);
     const k = Math.min(sectionWheel.inner.length - 1, Math.floor(wp * sectionWheel.inner.length));
     sectionWheel.pick(k);

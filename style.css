@@ -184,3 +184,66 @@ html.loading,html.loading body{overflow:hidden}
 .ld-pct b{font-weight:500}
 @media (max-width:700px){.ld-status{display:none}}
 @media (prefers-reduced-motion:reduce){.hi-in,.name span,.boot span,.blink,.dot,.ld-line span{animation:none}.loader{transition:none}}
+
+/* =====================================================================
+   Phones (landing page): portrait up top, shrinking away as the copy takes over
+   ===================================================================== */
+@media (max-width:820px) and (min-height:521px){
+  .stage{height:100vh;height:100dvh}
+  .topbar{top:14px;padding-bottom:8px}
+  .tb-right,.tb-left em{display:none}
+  .tb-left{font-size:.64rem}
+  .steps button{padding:11px 8px;font-size:.6rem;min-height:38px}
+  .steps button i{display:none}
+  .name{font-size:clamp(4rem,22.5vw,6.6rem)}
+  .hi{font-size:1.5rem}
+  .boot{font-size:.62rem}
+  .pw{top:11vh;top:11dvh;bottom:auto;right:-4vw;height:min(50vh,calc(92vw / var(--ar)));height:min(50dvh,calc(92vw / var(--ar)));will-change:transform}
+  .about{top:44vh;top:44dvh;width:calc(100vw - var(--pad) * 2)}
+  .work{top:42vh;top:42dvh;width:calc(100vw - var(--pad) * 2)}
+  .kicker{margin-bottom:14px;font-size:.66rem}
+  .lead{font-size:1.08rem;line-height:1.36}
+  .readout{margin-top:20px}.readout div{padding:10px 0;font-size:.72rem}
+  .links a{padding:13px 8px;gap:10px}
+  .links .t{font-size:1.28rem}
+  .links a.dlrow{padding-right:112px}
+  .links a.dl{padding:8px 10px;font-size:.62rem;right:6px}
+  .contact{gap:8px;margin-top:18px}.contact a{padding:11px 12px;font-size:.68rem}
+  .rt{width:18px;height:18px}
+  .await{font-size:.6rem;left:30%;top:46%}
+  .ld-name{font-size:clamp(3.4rem,19vw,7rem)}
+  .ld-top{font-size:.62rem}
+  .bottombar{bottom:18px;font-size:.6rem}
+}
+@media (max-width:820px) and (min-height:521px) and (max-height:700px){
+  .pw{height:min(44dvh,calc(92vw / var(--ar)))}
+  .about{top:40dvh}.work{top:38dvh}
+  .lead{font-size:.98rem}.links a{padding:10px 8px}
+}
+
+/* very narrow phones (e.g. 320-360 px): keep all four step buttons on screen */
+@media (max-width:380px){
+  .tb-left{display:none}
+  .topbar{justify-content:center}
+  .steps{gap:0}.steps button{padding:11px 7px;font-size:.58rem}
+}
+
+/* phones held sideways (short screens): text on the left, portrait on the right, no overlap */
+@media (max-height:520px){
+  .stage{height:100vh;height:100dvh}
+  .topbar{top:8px;padding-bottom:6px}
+  .name{font-size:clamp(3rem,25vh,7rem)}
+  .hi{font-size:1.15rem}
+  .boot,.bottombar,.ruler{display:none}
+  .pw{top:auto;bottom:0;right:3vw;height:min(88vh,calc(42vw / var(--ar)))}
+  .about{top:31vh;width:min(52vw,560px)}
+  .work{top:29vh;width:min(54vw,600px)}
+  .kicker{margin-bottom:8px}
+  .lead{font-size:.92rem;line-height:1.32}
+  .readout{display:none}
+  .links a{padding:6px 8px}.links .t{font-size:1.05rem}.links a.dlrow{padding-right:120px}
+  .contact{margin-top:10px;gap:6px}.contact a{padding:8px 10px;font-size:.62rem}
+}
+
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button{-webkit-tap-highlight-color:transparent}

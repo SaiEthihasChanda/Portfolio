@@ -61,6 +61,7 @@ const crosses = [];
 function measure(){
   H = innerHeight; W = innerWidth;
   rulerH = Math.max(0, el.ruler.clientHeight - 2);
+  el.pw.style.transformOrigin = (W <= 820 && H > 520) ? '100% 0' : '';          // phones: the portrait shrinks toward its top-right corner
 }
 addEventListener('resize', measure); measure();
 
@@ -100,7 +101,7 @@ function render(p, time){
   // --- 1. Hi, I'm Ethihas ---
   const s1 = easeIO(seg(p, .12, .27));
   const k = 1 - .69 * s1;
-  el.nameWrap.style.transform = `translate3d(0,calc(-50% - ${(s1 * 37).toFixed(2)}vh),0) scale(${k.toFixed(4)})`;
+  el.nameWrap.style.transform = `translate3d(0,calc(-50% - ${(s1 * (H < 520 ? 31 : 37)).toFixed(2)}vh),0) scale(${k.toFixed(4)})`;
   const hiO = 1 - seg(p, .05, .13);
   el.hi.style.opacity = hiO.toFixed(3);
   el.boot.style.opacity = (1 - seg(p, .03, .09)).toFixed(3);
@@ -109,7 +110,8 @@ function render(p, time){
   // --- 2. portrait scan-in ---
   const s2 = ease(seg(p, .17, .38));
   const drift = p * -3;                                                // vh, slow rise while scrolling
-  el.pw.style.transform = `translate3d(${(smx * -14 + (1 - s2) * 70).toFixed(1)}px,${(drift * H / 100 + smy * -8).toFixed(1)}px,0)`;
+  const mob = W <= 820 && H > 520, pScale = mob ? 1 - .42 * easeIO(seg(p, .38, .47)) : 1;   // phones: make room for the text
+  el.pw.style.transform = `translate3d(${(smx * -14 + (1 - s2) * 70).toFixed(1)}px,${(drift * H / 100 + smy * -8).toFixed(1)}px,0) scale(${pScale.toFixed(4)})`;
   el.pimg.style.clipPath = `inset(0 0 ${((1 - s2) * 100).toFixed(2)}% 0)`;
   el.pimg.style.transform = `translate3d(${(smx * -10).toFixed(1)}px,0,0) scale(${(1 + p * .05).toFixed(4)})`;
   const scanning = s2 > 0 && s2 < .995;

@@ -9,7 +9,7 @@
   --pad:clamp(18px,4vw,64px);--ease:cubic-bezier(.16,1,.3,1);--hud:var(--ink);--fade:clamp(120px,22vh,240px);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg);scroll-behavior:auto}
+html{background:var(--bg);scroll-behavior:auto;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -208,12 +208,78 @@ footer{padding:26px var(--pad) 34px;display:flex;justify-content:space-between;f
 
 @media (max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:900px){
-  .banner{min-height:600px}.bn-content{padding-bottom:calc(var(--fade) + 110px)}
   .ov{grid-template-columns:1fr}
-  .mq{width:90%;right:-30%;opacity:.55}svg.bn-wheel{right:-34%;width:92vw;opacity:.55}
+  .pager{grid-template-columns:1fr}.pager a+a{border-left:0;border-top:1px solid var(--ink)}
+  .step::before{right:0}
+  .gal-sticky,.wheel-sticky{height:100vh;height:100dvh}
   .wheel-sticky .wrap{grid-template-columns:1fr;gap:10px}#wheel{max-width:420px}
-  .topbar .crumb{display:none}.pager{grid-template-columns:1fr}.pager a+a{border-left:0;border-top:1px solid var(--ink)}
-  .bn-ctrl{gap:8px;flex-wrap:wrap}.tm{display:none}.cbtn{padding:9px 10px}
+}
+@media (max-width:760px){
+  :root{--pad:18px}
+  .fc{width:16px;height:16px}.fc.tl{left:10px;top:10px}.fc.tr{right:10px;top:10px}.fc.bl{left:10px;bottom:10px}.fc.br{right:10px;bottom:10px}
+  /* top bar: back button + short crumb, no clock */
+  .topbar{padding:14px var(--pad) 8px}
+  .topbar .right{display:none}
+  .topbar .crumb{display:block;font-size:.62rem;letter-spacing:.08em}
+  .topbar a.back{padding:10px 12px}
+  /* banner */
+  .banner{height:min(96vh,860px);height:min(96dvh,860px);min-height:580px}
+  .bn-content{padding-bottom:calc(var(--fade) + 100px)}
+  h1.title{font-size:clamp(3.2rem,17vw,5.4rem)}
+  h1.title.long{font-size:clamp(2.4rem,12.4vw,4.4rem)}
+  .kicker{font-size:.62rem;letter-spacing:.12em;margin-bottom:16px}
+  .tagline{font-size:1.02rem;margin-top:18px}
+  .cta{gap:10px;margin-top:20px}
+  .btn{padding:14px 16px;font-size:.74rem;flex:1 1 auto;justify-content:center}
+  /* video controls: one row of buttons, the seek bar underneath */
+  .bn-ctrl{flex-wrap:wrap;gap:8px;padding:0 var(--pad)}
+  .cbtn{padding:11px 11px;font-size:.6rem;letter-spacing:.08em}
+  .cbtn .t2{display:none}
+  #bn-full{margin-left:auto}
+  .seek{order:9;flex:1 1 100%;height:26px}
+  .tm{display:none}
+  .mq{width:110%;right:-42%;opacity:.5}
+  svg.bn-wheel{right:-42%;top:34%;width:118vw;opacity:.32;transform:translateY(-50%)}
+  /* content */
+  .sec{padding:56px 0}
+  #overview{padding-top:28px}
+  .sec-head{margin-bottom:26px}
+  .sec-head h2{font-size:clamp(2rem,10vw,3rem)}
+  .stat{grid-template-columns:1fr;gap:6px;padding:18px 0}
+  .stat b{font-size:2.3rem}
+  .readout div{font-size:.72rem;padding:12px 0}
+  .card{padding:26px 0 30px}
+  .grid{gap:0}
+  .code{font-size:.74rem;margin-top:36px}.code pre{padding:16px}
+  .gal{height:260vh}
+  .gal-head{margin-bottom:18px}.gal-head h2{font-size:2.1rem}
+  .shot{width:min(250px,70vw)}.shot:nth-child(even){margin-top:30px}
+  .wheel-sec{height:240vh}
+  .wheel-copy h2{font-size:2.1rem;margin:10px 0 12px}
+  .wheel-copy p{font-size:.92rem;line-height:1.5}
+  .convert{margin-top:16px;font-size:.78rem}.keys{margin-top:12px;font-size:.64rem}
+  #wheel{max-width:min(360px,86vw)}
+  .final{padding:70px 0}.final h2{font-size:clamp(2.2rem,12vw,3.6rem)}
+  .pager a{padding:26px var(--pad)}
+  footer{padding:20px var(--pad) 28px}
 }
 @media (max-width:660px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){h1.title .word span,.tagline,.cta,.dot,.cbtn.snd.hint,.mq-col{animation:none}[data-reveal]{opacity:1;transform:none;transition:none}}
+
+a,button{-webkit-tap-highlight-color:transparent}
+/* phones held sideways: let the banner grow past the screen instead of cutting its buttons off */
+@media (max-height:520px){
+  :root{--fade:72px}
+  .banner{height:auto;min-height:100vh;min-height:100dvh;padding-top:84px}
+  .bn-content{padding-bottom:calc(var(--fade) + 84px)}
+  h1.title{font-size:clamp(2.6rem,9vw,5rem)}h1.title.long{font-size:clamp(2.4rem,7vw,4.4rem)}
+  .tagline{font-size:.95rem;margin-top:12px}
+  .cta{margin-top:14px}.btn{padding:11px 16px}
+  .kicker{margin-bottom:12px}
+  .topbar{padding-top:10px}
+  .gal-sticky,.wheel-sticky{height:auto;min-height:100vh}
+  .gal,.wheel-sec{height:auto}
+  .gal-sticky,.wheel-sticky{position:relative}
+  .strip{overflow-x:auto;padding-bottom:10px;transform:none!important}
+  .wheel-sticky .wrap{grid-template-columns:1fr 1fr;padding-top:70px;padding-bottom:30px}
+}
