@@ -16,8 +16,8 @@ SCHEMES = {
 }
 
 # The installer is too big for the repo (GitHub's limit is 100 MB per file), so it is attached to a GitHub Release.
-# Change the repo name here if your repo is not called "Portfolio". While testing on localhost the button uses the local file.
-DOWNLOAD_URL = "https://github.com/SaiEthihasChanda/Portfolio/releases/latest/download/ShapeShifter-Setup.exe"
+# The installer lives on the shapeshifter repo release. While testing on localhost the button uses the local file.
+DOWNLOAD_URL = "https://github.com/SaiEthihasChanda/shapeshifter/releases/latest/download/ShapeShifter-Setup.exe"
 
 PROJECTS = [
     dict(
@@ -98,7 +98,7 @@ PROJECTS = [
         kicker="WINDOWS DESKTOP APP · PYTHON",
         tagline="Convert any file to another format in place, straight from File Explorer. Select, press a shortcut, point and click.",
         meta=[("TYPE", "Windows desktop app"), ("STACK", "Python · PySide6 · PyMuPDF · ffmpeg"), ("VERSION", "2.3.0 · Windows 10 / 11"), ("INSTALL", "Per-user, no admin rights needed")],
-        cta=[("↓ Download ShapeShifter", "../downloads/ShapeShifter-Setup-2.3.0.exe", True, "227 MB")],
+        cta=[("↓ Download ShapeShifter", "../downloads/ShapeShifter-Setup-2.3.0.exe", True, "147 MB")],
         media=dict(kind="wheel"),
         stats=[("360+", "file types it knows by name, plus anything it can infer"), ("0", "admin rights needed: it installs for your account only"), ("Ctrl+Alt+C", "opens the wheel for the selected files")],
         features=[
