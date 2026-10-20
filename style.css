@@ -248,3 +248,25 @@ html.loading,html.loading body{overflow:hidden}
 
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 a,button{-webkit-tap-highlight-color:transparent}
+
+/* =====================================================================
+   Interactive layer (interact.js)
+   ===================================================================== */
+.spot{background-image:linear-gradient(rgba(220,20,60,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(220,20,60,.55) 1px,transparent 1px);
+  background-size:40px 40px;opacity:.55;
+  -webkit-mask-image:radial-gradient(circle 190px at var(--mx,-999px) var(--my,-999px),#000 0,rgba(0,0,0,.35) 55%,transparent 100%);
+  mask-image:radial-gradient(circle 190px at var(--mx,-999px) var(--my,-999px),#000 0,rgba(0,0,0,.35) 55%,transparent 100%)}
+.wire{position:absolute;pointer-events:none;z-index:0}
+#pglitch{position:absolute;inset:0;width:100%;height:100%;display:none;pointer-events:none}
+
+.has-cursor,.has-cursor *{cursor:none!important}
+.fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9000}
+.cur-dot,.cur-ring,.cur-lab{position:fixed;left:0;top:0;pointer-events:none;z-index:9500;will-change:transform}
+.cur-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--accent);border-radius:50%}
+.cur-ring{width:36px;height:36px;margin:-18px 0 0 -18px;border:1px solid var(--ink);border-radius:50%;
+  transition:width .28s cubic-bezier(.16,1,.3,1),height .28s cubic-bezier(.16,1,.3,1),margin .28s cubic-bezier(.16,1,.3,1),background .25s,border-color .25s,border-radius .28s}
+.cur-ring.hot{width:62px;height:62px;margin:-31px 0 0 -31px;border-color:var(--accent);background:rgba(220,20,60,.1)}
+.cur-ring.look{width:70px;height:70px;margin:-35px 0 0 -35px;border-color:var(--accent);border-radius:6px;transform-origin:center}
+.cur-lab{font:500 .6rem/1 var(--mono);letter-spacing:.1em;color:var(--mute);white-space:pre;mix-blend-mode:multiply}
+@media (hover:none),(pointer:coarse){.cur-dot,.cur-ring,.cur-lab{display:none}}
+.contact a,.steps button,.links a.dl{will-change:translate}

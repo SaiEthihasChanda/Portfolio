@@ -79,6 +79,7 @@ const reveal = (() => {
   img.complete ? setup() : img.addEventListener('load', setup);
   return function draw(r, time){                           // r: 0..1 reveal progress
     if (!ready) return false;
+    if (window.__pglitch) return true;                      // hover glitch (interact.js) is drawing
     if (r >= .999 || r <= 0){ cv.style.display = 'none'; img.style.opacity = r <= 0 ? 0 : 1; return r > 0; }
     cv.style.display = 'block'; img.style.opacity = 0;
     ctx.clearRect(0, 0, nw, nh);
@@ -86,7 +87,7 @@ const reveal = (() => {
     for (let i = 0; i < S; i++){
       const sl = slices[i], lp = clamp((r * 1.45 - sl.t) / .38);     // each slice has its own start time
       if (lp <= 0) continue;
-      const y = Math.floor(i * sh), h = Math.ceil(sh) + 1;
+      const y = Math.round(i * sh), h = Math.round((i + 1) * sh) - y;      // exact, non-overlapping rows (no banding on the faded edge)
       const glitch = (1 - lp) * (1 - lp);
       const dx = sl.dir * sl.amp * glitch * nw * .22 + (glitch > .02 ? Math.sin(time * 40 + i) * 4 : 0);
       ctx.globalAlpha = Math.min(1, lp * 1.6);
@@ -158,7 +159,8 @@ function render(p, time){
   const mob = W <= 820 && H > 520, pScale = mob ? 1 - .42 * easeIO(seg(p, .31, .38)) : 1;   // phones: make room for the text
   el.pw.style.transform = `translate3d(${(smx * -14 + (1 - s2) * 70).toFixed(1)}px,${(drift * H / 100 + smy * -8).toFixed(1)}px,0) scale(${pScale.toFixed(4)})`;
   reveal(s2, time);
-  el.pimg.style.transform = `translate3d(${(smx * -10).toFixed(1)}px,0,0) scale(${((1 + p * .05) * (1 + (1 - s2) * .1)).toFixed(4)})`;
+  Object.assign(window.HERO, { p, s2, smx, smy, time });
+  el.pimg.style.transform = `perspective(1100px) rotateX(${(smy * -5).toFixed(2)}deg) rotateY(${(smx * 7).toFixed(2)}deg) translate3d(${(smx * -10).toFixed(1)}px,0,0) scale(${((1 + p * .05) * (1 + (1 - s2) * .1)).toFixed(4)})`;
   el.scan.style.opacity = 0;
   el.disc.style.opacity = ease(seg(p, .2, .36)).toFixed(3);
   el.disc.style.clipPath = `circle(${(ease(seg(p, .17, .31)) * 72).toFixed(2)}% at 50% 50%)`;   // iris opens from the centre
@@ -203,6 +205,7 @@ function render(p, time){
   el.cy.textContent = (smy * 2).toFixed(3).padStart(6, ' ');
 }
 
+window.HERO = { p: 0, s2: 0, smx: 0, smy: 0, time: 0 };     // read by interact.js
 function loop(now){
   const time = (now - t0) / 1000;
   cur = reduce ? target : cur + (target - cur) * .12;

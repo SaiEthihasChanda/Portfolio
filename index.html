@@ -38,10 +38,12 @@
   <div class="layer grid-major" id="grid-major"></div>
   <div class="layer bgtext" aria-hidden="true"><span id="bgtext">ETHIHAS&nbsp;ETHIHAS</span></div>
   <div class="layer crosses" id="crosses" aria-hidden="true"></div>
+  <div class="layer spot" id="spot" aria-hidden="true"></div>
 
   <!-- ===== portrait + rings ===== -->
   <div class="pw" id="pw">
     <div class="disc" id="disc"></div>
+    <canvas class="wire" id="wire" aria-hidden="true"></canvas>
     <svg class="rings" id="rings" viewBox="0 0 600 600" aria-hidden="true">
       <g id="ring-a"><circle cx="300" cy="300" r="292" class="r-dash"/><circle cx="300" cy="300" r="292" class="r-tick"/></g>
       <g id="ring-b"><circle cx="300" cy="300" r="262" class="r-thin"/><path d="M300 38 A262 262 0 0 1 562 300" class="r-arc"/></g>
@@ -119,5 +121,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
 <script src="app.js"></script>
+<script src="interact.js"></script>
 </body>
 </html>
