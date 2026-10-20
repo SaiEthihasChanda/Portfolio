@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShapeShifter — Ethihas</title>
+<meta name="description" content="Convert any file to another format in place, straight from File Explorer. Select, press a shortcut, point and click.">
+<meta name="theme-color" content="#18191e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../project.css">
+</head>
+<body class="dark-top" style="--accent:#4f5fe8;--accent-lt:#8f9bff;--bn:#18191e;--bn-rgb:24,25,30;--bg:#f6f6fa;--ink:#14151a;--ink-rgb:20,21,26">
+<i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i>
+<div class="topbar">
+  <a class="back" href="../index.html#work">← ETHIHAS</a>
+  <span class="crumb">[ <b>04</b> / 04 ] SHAPESHIFTER</span>
+  <span class="right"><span id="clock">00:00:00</span><span><i class="dot"></i> ONLINE</span></span>
+</div>
+<div class="ruler"><b></b></div>
+<div class="pbar"><i></i></div>
+<div class="bg"><div class="g1"></div><div class="g2"></div></div>
+
+<main>
+  <header class="banner">
+    <div class="bn-media"><svg id="bn-wheel" class="bn-wheel" aria-hidden="true"></svg></div>
+    <div class="bn-scrim"></div><div class="grain"></div>
+    <div class="bn-content">
+      <div class="wrap">
+        <div class="kicker">[ PROJECT 04 ] WINDOWS DESKTOP APP · PYTHON</div>
+        <h1 class="title long">ShapeShifter</h1>
+        <p class="tagline">Convert any file to another format in place, straight from File Explorer. Select, press a shortcut, point and click.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://github.com/SaiEthihasChanda/portfolio/releases/latest/download/ShapeShifter-Setup.exe" download data-local="../downloads/ShapeShifter-Setup-2.3.0.exe">↓ Download ShapeShifter <small>227 MB</small></a>
+          <a class="btn" href="#overview">Details ↓</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sec" id="overview">
+    <div class="wrap ov">
+      <div data-reveal><dl class="readout"><div><dt>TYPE</dt><dd>Windows desktop app</dd></div><div><dt>STACK</dt><dd>Python · PySide6 · PyMuPDF · ffmpeg</dd></div><div><dt>VERSION</dt><dd>2.3.0 · Windows 10 / 11</dd></div><div><dt>INSTALL</dt><dd>Per-user, no admin rights needed</dd></div></dl></div>
+      <div class="stats"><div class="stat" data-reveal style="--i:0"><b>360+</b><span>file types it knows by name, plus anything it can infer</span></div><div class="stat" data-reveal style="--i:1"><b>0</b><span>admin rights needed: it installs for your account only</span></div><div class="stat" data-reveal style="--i:2"><b>Ctrl+Alt+C</b><span>opens the wheel for the selected files</span></div></div>
+    </div>
+  </section>
+
+  <section class="wheel-sec" id="film">
+    <div class="wheel-sticky"><div class="wrap">
+      <div class="wheel-copy">
+        <span class="tag">[ THE WHEEL ]</span>
+        <h2>Point at what it should become.</h2>
+        <p>Select a file in Explorer and press the shortcut. A wheel of every format that file can turn into opens under your mouse. Type to search, click to convert.</p>
+        <div class="convert"><span class="from">holiday.jpg</span><span class="arr">→</span><span class="to">holiday<span id="to">.png</span></span></div>
+        <div class="keys"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> &nbsp;or right-click › Convert to…</div>
+      </div>
+      <svg id="wheel" role="img" aria-label="Illustration of the ShapeShifter format wheel"></svg>
+    </div></div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><h2>What it does</h2><span class="tag">[ FEATURES ]</span></div>
+      <div class="grid"><article class="card" data-reveal style="--i:0"><span class="n">01</span><h3>The wheel</h3><p>Right-click › Convert to… or press Ctrl+Alt+C. A wheel of everything the file can become appears under your mouse. Past 12 options, they spread over rotating rings.</p></article><article class="card" data-reveal style="--i:1"><span class="n">02</span><h3>In place</h3><p>holiday.jpg becomes holiday.png in the same folder, and the original goes to the Recycle Bin.</p></article><article class="card" data-reveal style="--i:2"><span class="n">03</span><h3>Knows what a file really is</h3><p>It reads byte signatures, containers, text and ffmpeg&#x27;s media probe, so renamed or extension-less files still work.</p></article><article class="card" data-reveal style="--i:0"><span class="n">04</span><h3>A graph of conversions</h3><p>Every file type is a node and every step an edge, so multi-step routes like DOCX → PDF → PNG are found automatically.</p></article><article class="card" data-reveal style="--i:1"><span class="n">05</span><h3>Learns reverse conversions</h3><p>Convert A → B once and it remembers that B → A is wanted, with a warning badge when the route loses something.</p></article><article class="card" data-reveal style="--i:2"><span class="n">06</span><h3>Documents keep their pictures</h3><p>PDF and Word output keeps images, links, tables, lists and non-Latin text. Nothing is silently dropped.</p></article></div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2 data-reveal>Any file. Any format.</h2>
+      <div class="cta" data-reveal>
+        <a class="btn primary" href="https://github.com/SaiEthihasChanda/portfolio/releases/latest/download/ShapeShifter-Setup.exe" download data-local="../downloads/ShapeShifter-Setup-2.3.0.exe">↓ Download ShapeShifter <small>227 MB</small></a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="lekalu.html"><small>← PREVIOUS · 03</small><b>Lekalu</b></a>
+    <a href="trustme.html"><small>NEXT · 01 →</small><b>TrustMe</b></a>
+  </nav>
+  <footer><span>© <span id="yr"></span> ETHIHAS</span><a href="../index.html#work">ALL PROJECTS</a></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+<script src="../project.js"></script>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

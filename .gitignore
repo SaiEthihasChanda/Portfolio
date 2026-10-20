@@ -1,0 +1,10 @@
+# Not published: too big for a repo (hosted as a GitHub Release instead) or just local working files
+downloads/
+old-ink-version/
+photo.jpg
+me.png
+tools/__pycache__/
+tools/*.log
+tools/encode_videos.sh
+*.exe
+Thumbs.db

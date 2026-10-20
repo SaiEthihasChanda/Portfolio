@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrustMe — Ethihas</title>
+<meta name="description" content="A secret manager where the key that proves an application&#x27;s identity never leaves the machine it belongs to.">
+<meta name="theme-color" content="#05070b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../project.css">
+</head>
+<body class="dark-top" style="--accent:#1a6ae0;--accent-lt:#6aa4ff;--bn:#05070b;--bn-rgb:5,7,11;--bg:#f5f7fb;--ink:#0b1220;--ink-rgb:11,18,32">
+<i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i>
+<div class="topbar">
+  <a class="back" href="../index.html#work">← ETHIHAS</a>
+  <span class="crumb">[ <b>01</b> / 04 ] TRUSTME</span>
+  <span class="right"><span id="clock">00:00:00</span><span><i class="dot"></i> ONLINE</span></span>
+</div>
+<div class="ruler"><b></b></div>
+<div class="pbar"><i></i></div>
+<div class="bg"><div class="g1"></div><div class="g2"></div></div>
+
+<main>
+  <header class="banner">
+    <div class="bn-media"><div class="bn-poster" style="background-image:url(../assets/videos/trustme.jpg)"></div><video autoplay muted loop playsinline preload="auto" poster="../assets/videos/trustme.jpg"><source src="../assets/videos/trustme.mp4" type="video/mp4"></video></div>
+    <div class="bn-scrim"></div><div class="grain"></div>
+    <div class="bn-content">
+      <div class="wrap">
+        <div class="kicker">[ PROJECT 01 ] SECURITY · DEVELOPER TOOL</div>
+        <h1 class="title">TrustMe</h1>
+        <p class="tagline">A secret manager where the key that proves an application&#x27;s identity never leaves the machine it belongs to.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://trustme-33ab7.web.app" target="_blank" rel="noopener">Open the console ↗</a>
+          <a class="btn" href="#overview">Details ↓</a>
+        </div>
+      </div>
+    </div>
+    <div class="bn-ctrl">
+      <button class="cbtn" id="bn-play" aria-label="Play or pause the film"><i class="led"></i>PAUSE</button>
+      <button class="cbtn snd" id="bn-snd" aria-label="Turn sound on or off"><i class="led"></i>SOUND ON</button>
+      <div class="seek" role="slider" aria-label="Seek"><i><b></b></i></div>
+      <span class="tm" id="bn-time">00:00 / 00:00</span>
+      <button class="cbtn" id="bn-full" aria-label="Full screen">FULLSCREEN</button>
+    </div>
+  </header>
+
+  <section class="sec" id="overview">
+    <div class="wrap ov">
+      <div data-reveal><dl class="readout"><div><dt>TYPE</dt><dd>Secret manager</dd></div><div><dt>STACK</dt><dd>ECDSA P-256 · Argon2id · AES-256-GCM</dd></div><div><dt>BUILT WITH</dt><dd>React · Firebase · Java / Python / JS libraries</dd></div><div><dt>STATUS</dt><dd>Live</dd></div></dl></div>
+      <div class="stats"><div class="stat" data-reveal style="--i:0"><b>P-256</b><span>ECDSA key that never leaves your machine</span></div><div class="stat" data-reveal style="--i:1"><b>60 s</b><span>lifetime of every signed, single-use request</span></div><div class="stat" data-reveal style="--i:2"><b>3</b><span>client libraries: Java, Python and JavaScript</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><h2>What it does</h2><span class="tag">[ FEATURES ]</span></div>
+      <div class="grid"><article class="card" data-reveal style="--i:0"><span class="n">01</span><h3>The key stays home</h3><p>Each application holds one .TM file containing an ECDSA P-256 private key, encrypted at rest with a password only you know.</p></article><article class="card" data-reveal style="--i:1"><span class="n">02</span><h3>Signed, single-use requests</h3><p>To read a secret, the library unlocks the key in your own process, signs a 60-second assertion and sends only the signature.</p></article><article class="card" data-reveal style="--i:2"><span class="n">03</span><h3>A breach can&#x27;t forge anything</h3><p>The server stores just the public half of the key, so a full database breach cannot forge a request for any application.</p></article><article class="card" data-reveal style="--i:0"><span class="n">04</span><h3>One line to read a secret</h3><p>TrustMe.get(&quot;STRIPE_API_KEY&quot;). The same call exists in the Java, Python and JavaScript libraries.</p></article><article class="card" data-reveal style="--i:1"><span class="n">05</span><h3>Made for pipelines</h3><p>Supply the password on stdin or from a file. There is a Jenkins recipe, and no environment variables to leak.</p></article><article class="card" data-reveal style="--i:2"><span class="n">06</span><h3>Share with your team</h3><p>Invite people by Google account email. Members can read and change secrets; only the owner can delete the app or manage access.</p></article></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head" data-reveal><h2>How a secret is read</h2><span class="tag">[ HOW IT WORKS ]</span></div>
+      <div class="steps"><div class="step" data-reveal style="--i:0"><i></i><span class="mono">UNLOCK</span><h3>Open the key</h3><p>The library finds the .TM file and unlocks it with your password (Argon2id, then AES-256-GCM).</p></div><div class="step" data-reveal style="--i:1"><i></i><span class="mono">SIGN</span><h3>Prove who you are</h3><p>It signs a short-lived, single-use assertion with the private key, inside your own process.</p></div><div class="step" data-reveal style="--i:2"><i></i><span class="mono">VERIFY</span><h3>Get the secret</h3><p>The cloud function checks the signature, rejects replays and expired assertions, then returns the value.</p></div></div>
+      <div class="code" data-reveal><div class="bar"><i></i> JAVA</div><pre><span class="c">// the key file and password are asked for once, at start-up</span>
+String key = <span class="k">TrustMe</span>.get("STRIPE_API_KEY");</pre></div>
+    </div>
+  </section>
+  <section class="final">
+    <div class="wrap">
+      <h2 data-reveal>Secrets without the risk.</h2>
+      <div class="cta" data-reveal>
+        <a class="btn primary" href="https://trustme-33ab7.web.app" target="_blank" rel="noopener">Open the console ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pager">
+    <a href="shapeshifter.html"><small>← PREVIOUS · 04</small><b>ShapeShifter</b></a>
+    <a href="tether.html"><small>NEXT · 02 →</small><b>Tether</b></a>
+  </nav>
+  <footer><span>© <span id="yr"></span> ETHIHAS</span><a href="../index.html#work">ALL PROJECTS</a></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+<script src="../project.js"></script>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

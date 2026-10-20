@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethihas — Portfolio</title>
+<meta name="description" content="Hi, I'm Ethihas. Scroll-driven portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== loading screen ===== -->
+<div class="loader" id="loader" role="progressbar" aria-label="Loading">
+  <i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i>
+  <div class="ld-top"><span class="sq"></span> ETHIHAS <em>// PORTFOLIO_v1</em></div>
+  <div class="ld-center">
+    <div class="ld-name" aria-hidden="true">
+      <div class="ld-line"><span>E</span><span>T</span><span>H</span><span>I</span><span>H</span><span>A</span><span>S</span></div>
+      <div class="ld-line ld-fill" id="ld-fill"><span>E</span><span>T</span><span>H</span><span>I</span><span>H</span><span>A</span><span>S</span></div>
+      <i class="ld-edge" id="ld-edge"></i>
+    </div>
+  </div>
+  <div class="ld-bottom">
+    <div class="ld-status" id="ld-status"><span class="blink">▮</span> <b id="ld-msg">INITIALISING</b></div>
+    <div class="ld-bar"><div class="ld-bar-fill" id="ld-bar"></div></div>
+    <div class="ld-pct"><b id="ld-pct">000</b>%</div>
+  </div>
+</div>
+
+<div class="track" id="track">
+<div class="stage" id="stage">
+
+  <!-- ===== parallax background ===== -->
+  <div class="layer grid-fine" id="grid-fine"></div>
+  <div class="layer grid-major" id="grid-major"></div>
+  <div class="layer bgtext" aria-hidden="true"><span id="bgtext">ETHIHAS&nbsp;ETHIHAS</span></div>
+  <div class="layer crosses" id="crosses" aria-hidden="true"></div>
+
+  <!-- ===== portrait + rings ===== -->
+  <div class="pw" id="pw">
+    <div class="disc" id="disc"></div>
+    <svg class="rings" id="rings" viewBox="0 0 600 600" aria-hidden="true">
+      <g id="ring-a"><circle cx="300" cy="300" r="292" class="r-dash"/><circle cx="300" cy="300" r="292" class="r-tick"/></g>
+      <g id="ring-b"><circle cx="300" cy="300" r="262" class="r-thin"/><path d="M300 38 A262 262 0 0 1 562 300" class="r-arc"/></g>
+      <g id="ring-c"><circle cx="300" cy="300" r="226" class="r-dash2"/><path d="M74 300 A226 226 0 0 0 300 526" class="r-arc2"/></g>
+    </svg>
+    <div class="pimg" id="pimg">
+      <img src="assets/me_cutout.png" alt="Portrait of Ethihas" id="portrait">
+    </div>
+    <div class="scanline" id="scanline"></div>
+    <!-- reticle brackets -->
+    <i class="rt tl"></i><i class="rt tr"></i><i class="rt bl"></i><i class="rt br"></i>
+    <div class="await" id="await">AWAITING SUBJECT<span class="blink">_</span></div>
+  </div>
+
+  <!-- ===== copy that lives inside the animation ===== -->
+  <div class="copy">
+    <div class="name-wrap" id="name-wrap">
+      <div class="hi" id="hi"><span class="hi-in">Hi, I'm</span></div>
+      <h1 class="name" id="name" aria-label="Ethihas"><span>E</span><span>t</span><span>h</span><span>i</span><span>h</span><span>a</span><span>s</span></h1>
+      <div class="boot" id="boot"><span>&gt; INITIALISING INTERFACE</span><span>&gt; LOADING PROFILE</span></div>
+    </div>
+
+    <div class="about" id="about">
+      <div class="kicker">[ 03 ] PROFILE</div>
+      <p class="lead" id="lead">I'm Ethihas, a developer from Chennai who turns “wouldn’t it be nice if…” into working software. I build secret managers, file-sync tools and apps that convert your files with one click. Python and AI are my playground, and I'm happiest when something I built just works.</p>
+      <dl class="readout">
+        <div><dt>ROLE</dt><dd>Developer</dd></div>
+        <div><dt>BASE</dt><dd>Chennai, India</dd></div>
+        <div><dt>FOCUS</dt><dd>AI / Python / Data</dd></div>
+      </dl>
+    </div>
+
+    <div class="work" id="work">
+      <div class="kicker">[ 04 ] SELECTED WORK</div>
+      <ul class="links" id="links">
+        <li><a href="projects/trustme.html"><span class="n">01</span><span class="t">TrustMe</span><span class="c">Secret manager · Security</span><span class="a">→</span></a></li>
+        <li><a href="projects/tether.html"><span class="n">02</span><span class="t">Tether</span><span class="c">File sync · CLI + Cloud</span><span class="a">→</span></a></li>
+        <li><a href="projects/lekalu.html"><span class="n">03</span><span class="t">Lekalu</span><span class="c">Expense tracker · React</span><span class="a">→</span></a></li>
+        <li class="has-dl"><a href="projects/shapeshifter.html" class="dlrow"><span class="n">04</span><span class="t">ShapeShifter</span><span class="c">File converter · Windows</span><span class="a">→</span></a><a class="dl" href="https://github.com/SaiEthihasChanda/portfolio/releases/latest/download/ShapeShifter-Setup.exe" data-local="downloads/ShapeShifter-Setup-2.3.0.exe" download>↓ Download</a></li>
+      </ul>
+      <div class="contact" id="contact">
+        <a href="mailto:saiethihaschanda@gmail.com">saiethihaschanda@gmail.com</a>
+        <a href="https://github.com/SaiEthihasChanda" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/sai-ethihas-chanda-6724b0294/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HUD overlay ===== -->
+  <div class="hud">
+    <i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i>
+
+    <div class="topbar">
+      <div class="tb-left"><span class="sq"></span> ETHIHAS <em>// PORTFOLIO_v1</em></div>
+      <nav class="steps" id="steps">
+        <button data-p="0"><i>01</i> HELLO</button>
+        <button data-p=".26"><i>02</i> SUBJECT</button>
+        <button data-p=".5"><i>03</i> PROFILE</button>
+        <button data-p=".8"><i>04</i> WORK</button>
+      </nav>
+      <div class="tb-right"><span id="clock">00:00:00</span> <span class="online"><i class="dot"></i>ONLINE</span></div>
+    </div>
+
+    <div class="ruler" id="ruler"><div class="marker" id="marker"><b id="pct">000</b></div></div>
+
+    <div class="bottombar">
+      <div class="bb-left" id="hint"><span class="blink">▮</span> SCROLL TO ADVANCE</div>
+      <div class="bb-bar"><div class="bb-fill" id="bar"></div></div>
+      <div class="bb-right">X <b id="cx">0.000</b> &nbsp; Y <b id="cy">0.000</b> &nbsp; T+<b id="tt">00</b>s</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
