@@ -51,6 +51,7 @@
     if (busy) return; busy = true;
     if (window.__lenis) window.__lenis.stop();
     window.SFX && window.SFX.leave();
+    window.SFX && window.SFX.amb && window.SFX.amb.fadeOut(.8);
     build(d); ov.classList.add('on'); void ov.offsetWidth; ov.classList.add('in');
     try { sessionStorage.setItem('pt', JSON.stringify(Object.assign({}, d, { t: Date.now() }))); } catch (e) {}
     setTimeout(() => { location.href = url.href; }, 1000);

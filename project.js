@@ -47,6 +47,7 @@ if (bv){
     pBtn.innerHTML = `<i class="led"></i>${bv.paused ? 'PLAY' : 'PAUSE'}`;
     sBtn.innerHTML = `<i class="led"></i>${bv.muted ? 'SOUND OFF' + (userMuted ? '' : '<span class="t2"> · CLICK ANYWHERE FOR SOUND</span>') : 'SOUND ON'}`;
     sBtn.classList.toggle('hint', bv.muted && !userMuted);
+    if (window.SFX && SFX.amb) SFX.amb.film(!bv.muted && !bv.paused);          // the film has its own sound: tuck the ambient bed away
   };
   // Sound is ON by default. Browsers only allow that in some cases (e.g. you already interacted with the site), so if
   // the browser refuses we fall back to muted autoplay and switch the sound on at your first click, tap or key press.
