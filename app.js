@@ -13,7 +13,7 @@ const track = $('#track'), stage = $('#stage');
 const el = {
   gridFine: $('#grid-fine'), gridMajor: $('#grid-major'), bgtext: $('#bgtext'), crosses: $('#crosses'),
   pw: $('#pw'), disc: $('#disc'), rings: $('#rings'), ringA: $('#ring-a'), ringB: $('#ring-b'), ringC: $('#ring-c'),
-  pimg: $('#pimg'), scan: $('#scanline'), rts: $$('.rt'), await: $('#await'),
+  pimg: $('#pimg'), pcv: $('#pcv'), img: $('#portrait'), scan: $('#scanline'), rts: $$('.rt'), await: $('#await'),
   nameWrap: $('#name-wrap'), hi: $('#hi'), boot: $('#boot'),
   about: $('#about'), lead: $('#lead'), work: $('#work'), rows: $$('#links li'), contact: $('#contact'),
   steps: $$('#steps button'), marker: $('#marker'), pct: $('#pct'), bar: $('#bar'), hint: $('#hint'), ruler: $('#ruler'),
@@ -55,6 +55,51 @@ const crosses = [];
   const img = $('#portrait');
   const set = () => img.naturalWidth && el.pw.style.setProperty('--ar', (img.naturalWidth / img.naturalHeight).toFixed(4));
   img.complete ? set() : img.addEventListener('load', set);
+})();
+
+/* ---------- portrait reveal: glitch slices with RGB split (canvas) ---------- */
+const reveal = (() => {
+  const cv = el.pcv, ctx = cv.getContext('2d'), img = el.img;
+  const S = 64;                                           // number of horizontal slices
+  let tint = null, ready = false, nw = 0, nh = 0;
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const slices = Array.from({ length: S }, (_, i) => ({ t: (i / S) * .62 + rnd() * .38, dir: rnd() < .5 ? -1 : 1, amp: .35 + rnd() * .65 }));
+  const tinted = col => {
+    const c = document.createElement('canvas'); c.width = nw; c.height = nh;
+    const g = c.getContext('2d'); g.drawImage(img, 0, 0, nw, nh);
+    g.globalCompositeOperation = 'source-in'; g.fillStyle = col; g.fillRect(0, 0, nw, nh); return c;
+  };
+  function setup(){
+    if (!img.naturalWidth) return;
+    const k = img.naturalWidth > 1000 ? .5 : 1;           // draw at half size: plenty for the screen, much cheaper
+    nw = Math.round(img.naturalWidth * k); nh = Math.round(img.naturalHeight * k);
+    cv.width = nw; cv.height = nh;
+    tint = { red: tinted('#dc143c'), cyan: tinted('#19d3ff') }; ready = true;
+  }
+  img.complete ? setup() : img.addEventListener('load', setup);
+  return function draw(r, time){                           // r: 0..1 reveal progress
+    if (!ready) return false;
+    if (r >= .999 || r <= 0){ cv.style.display = 'none'; img.style.opacity = r <= 0 ? 0 : 1; return r > 0; }
+    cv.style.display = 'block'; img.style.opacity = 0;
+    ctx.clearRect(0, 0, nw, nh);
+    const sh = nh / S;
+    for (let i = 0; i < S; i++){
+      const sl = slices[i], lp = clamp((r * 1.45 - sl.t) / .38);     // each slice has its own start time
+      if (lp <= 0) continue;
+      const y = Math.floor(i * sh), h = Math.ceil(sh) + 1;
+      const glitch = (1 - lp) * (1 - lp);
+      const dx = sl.dir * sl.amp * glitch * nw * .22 + (glitch > .02 ? Math.sin(time * 40 + i) * 4 : 0);
+      ctx.globalAlpha = Math.min(1, lp * 1.6);
+      ctx.drawImage(img, 0, y, nw, h, dx, y, nw, h);                  // the slice itself
+      if (glitch > .01){                                              // chromatic split while it settles
+        ctx.globalAlpha = Math.min(.6, glitch * 1.1);
+        ctx.drawImage(tint.red, 0, y, nw, h, dx + glitch * nw * .05, y, nw, h);
+        ctx.drawImage(tint.cyan, 0, y, nw, h, dx - glitch * nw * .05, y, nw, h);
+      }
+    }
+    ctx.globalAlpha = 1;
+    return true;
+  };
 })();
 
 /* ---------- layout measurements ---------- */
@@ -112,17 +157,16 @@ function render(p, time){
   const drift = p * -3;                                                // vh, slow rise while scrolling
   const mob = W <= 820 && H > 520, pScale = mob ? 1 - .42 * easeIO(seg(p, .31, .38)) : 1;   // phones: make room for the text
   el.pw.style.transform = `translate3d(${(smx * -14 + (1 - s2) * 70).toFixed(1)}px,${(drift * H / 100 + smy * -8).toFixed(1)}px,0) scale(${pScale.toFixed(4)})`;
-  el.pimg.style.clipPath = `inset(0 0 ${((1 - s2) * 100).toFixed(2)}% 0)`;
-  el.pimg.style.transform = `translate3d(${(smx * -10).toFixed(1)}px,0,0) scale(${(1 + p * .05).toFixed(4)})`;
-  const scanning = s2 > 0 && s2 < .995;
-  el.scan.style.opacity = scanning ? 1 : 0;
-  el.scan.style.top = (s2 * 100).toFixed(2) + '%';
+  reveal(s2, time);
+  el.pimg.style.transform = `translate3d(${(smx * -10).toFixed(1)}px,0,0) scale(${((1 + p * .05) * (1 + (1 - s2) * .1)).toFixed(4)})`;
+  el.scan.style.opacity = 0;
   el.disc.style.opacity = ease(seg(p, .2, .36)).toFixed(3);
+  el.disc.style.clipPath = `circle(${(ease(seg(p, .17, .31)) * 72).toFixed(2)}% at 50% 50%)`;   // iris opens from the centre
   el.disc.style.transform = `translate3d(${(smx * 22).toFixed(1)}px,${(smy * 14 + (1 - s2) * 40).toFixed(1)}px,0) scale(${(.55 + .45 * s2 + p * .06).toFixed(4)})`;
   el.rings.style.transform = `translate3d(${(smx * -8).toFixed(1)}px,${(smy * -6).toFixed(1)}px,0) scale(${(.92 + .08 * s2 + p * .04).toFixed(4)})`;
   el.rings.style.opacity = (.55 + .45 * s2).toFixed(2);
-  el.ringA.style.transform = `rotate(${(p * 200 + time * 4).toFixed(2)}deg)`;
-  el.ringB.style.transform = `rotate(${(-(p * 320) - time * 7).toFixed(2)}deg)`;
+  el.ringA.style.transform = `rotate(${(p * 200 + time * 4 + (1 - s2) * 160).toFixed(2)}deg)`;
+  el.ringB.style.transform = `rotate(${(-(p * 320) - time * 7 - (1 - s2) * 240).toFixed(2)}deg)`;
   el.ringC.style.transform = `rotate(${(p * 460 + time * 11).toFixed(2)}deg)`;
   const rt = seg(p, .13, .22);
   el.rts.forEach(r => { r.style.opacity = rt.toFixed(2); r.style.transform = `scale(${(1.5 - .5 * rt).toFixed(3)})`; });

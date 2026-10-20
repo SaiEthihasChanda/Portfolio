@@ -45,7 +45,8 @@ html.lenis,html.lenis body{height:auto}
 .r-arc{stroke:var(--accent);stroke-width:3;stroke-linecap:round}
 .r-dash2{stroke:var(--ink);stroke-width:1;stroke-dasharray:14 6 2 6;opacity:.45}
 .r-arc2{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
-.pimg{position:absolute;inset:0;will-change:clip-path,transform}
+.pimg{position:absolute;inset:0;will-change:transform}
+#pcv{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
 .pimg img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block;filter:contrast(1.06);
   -webkit-user-drag:none;user-select:none}
 .scanline{position:absolute;left:-4%;right:-4%;height:2px;background:var(--accent);box-shadow:0 0 18px 2px rgba(220,20,60,.55);opacity:0;top:0}
