@@ -9,6 +9,7 @@ let lenis = null;
 if (typeof Lenis !== 'undefined' && !reduce){
   lenis = new Lenis({ duration: 1.15, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+  window.__lenis = lenis;
 }
 
 /* ---------- title: animated letters, words kept whole ---------- */

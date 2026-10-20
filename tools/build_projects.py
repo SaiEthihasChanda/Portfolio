@@ -238,6 +238,8 @@ def page(i, p):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../project.css">
+<link rel="stylesheet" href="../transition.css">
+<script>try{{var d=JSON.parse(sessionStorage.getItem('pt')||'null');if(d&&Date.now()-d.t<8000){{var r=document.documentElement;r.classList.add('pt-cover');r.style.setProperty('--pt-bg',d.bg)}}}}catch(e){{}}</script>
 </head>
 <body class="dark-top" style="{scheme_style(p['slug'])}">
 <i class="fc tl"></i><i class="fc tr"></i><i class="fc bl"></i><i class="fc br"></i>
@@ -298,6 +300,7 @@ def page(i, p):
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.36/dist/lenis.min.js"></script>
+<script src="../transition.js"></script>
 <script src="../project.js"></script>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>

@@ -233,6 +233,16 @@ setInterval(() => {
     window.scrollTo(0, Math.round(.97 * (track.offsetHeight - H)));
     readScroll(); cur = target;
   }
+  // arriving through a page transition: the curtain already did the intro, so skip the loading screen
+  let viaCurtain = false;
+  try { viaCurtain = !!sessionStorage.getItem('pt'); } catch (e) {}
+  if (viaCurtain && !reduce){
+    L.remove(); root.classList.remove('loading');
+    const go = () => document.body.classList.add('ready');
+    window.addEventListener('pt:reveal', go, { once: true }); setTimeout(go, 2500);
+    if (lenis) lenis.start();
+    return;
+  }
   const MIN_MS = reduce ? 0 : (back ? 700 : 2200), MAX_MS = 7000;
   const start = performance.now();
   if (lenis) lenis.stop();

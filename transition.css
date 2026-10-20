@@ -1,0 +1,24 @@
+/* Page transitions: a curtain of columns sweeps over the page, names the destination, then lifts off the next one. */
+.pt{position:fixed;inset:0;z-index:99999;pointer-events:none;display:flex;overflow:hidden;visibility:hidden}
+.pt.on{visibility:visible;pointer-events:all}
+.pt-c{position:relative;flex:1;height:100%;background:var(--pt-bg,#0b0b0c);transform:translateY(101%);
+  transition:transform .62s cubic-bezier(.76,0,.24,1);transition-delay:calc(var(--i) * 55ms);will-change:transform}
+.pt-c::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--pt-ac,#dc143c)}
+.pt-c+.pt-c{margin-left:-1px}
+.pt.in .pt-c{transform:translateY(0)}
+.pt.out .pt-c{transform:translateY(-101%)}
+.pt.nox .pt-c{transition:none}
+.pt-label{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;color:var(--pt-fg,#fff);opacity:0;
+  font-family:'JetBrains Mono',ui-monospace,Consolas,monospace;pointer-events:none;transition:opacity .25s}
+.pt.in .pt-label{opacity:1;transition:opacity .3s .3s}
+.pt.out .pt-label{opacity:0;transition:opacity .2s}
+.pt-label small{display:block;font-size:.72rem;letter-spacing:.2em;color:var(--pt-ac,#dc143c);margin-bottom:14px}
+.pt-label b{display:block;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;font-size:clamp(2.6rem,10vw,8rem);letter-spacing:-.05em;line-height:1}
+.pt-bar{position:absolute;left:50%;bottom:12%;width:min(260px,50vw);height:2px;margin-left:calc(min(260px,50vw) / -2);background:rgba(128,128,128,.3);overflow:hidden;opacity:0;transition:opacity .2s .3s}
+.pt-bar i{display:block;height:100%;width:100%;background:var(--pt-ac,#dc143c);transform:scaleX(0);transform-origin:left}
+.pt.in .pt-bar{opacity:1}
+.pt.in .pt-bar i{transform:scaleX(1);transition:transform .5s .35s cubic-bezier(.76,0,.24,1)}
+/* the page we are arriving on stays hidden behind a plain cover until the curtain is built */
+html.pt-cover::before{content:"";position:fixed;inset:0;z-index:99998;background:var(--pt-bg,#0b0b0c)}
+html.pt-cover h1.title .word span,html.pt-cover .tagline,html.pt-cover .cta{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.pt{display:none}html.pt-cover::before{display:none}}
