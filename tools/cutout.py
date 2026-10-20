@@ -8,9 +8,10 @@ import mediapipe as mp
 
 src = sys.argv[1] if len(sys.argv) > 1 else "photo.jpg"
 out = sys.argv[2] if len(sys.argv) > 2 else "assets/me_cutout.png"
-CROP = (.36, .10, .66, .60)          # generous box around head + chest
+# optional: x0 y0 x1 y1 (fractions of the photo) and where the bottom fade starts, e.g.  .27 0 .85 .55 .7
+CROP = tuple(float(v) for v in sys.argv[3:7]) if len(sys.argv) >= 7 else (.27, 0.0, .85, .55)
+FADE_FROM = float(sys.argv[7]) if len(sys.argv) >= 8 else .70
 OUT_H = 1500
-FADE_FROM = .66                      # bottom of the picture fades out from here
 
 os.makedirs(os.path.dirname(out), exist_ok=True)
 img = cv2.imread(src, cv2.IMREAD_COLOR)
@@ -43,8 +44,8 @@ if n > 1:
 m = cv2.GaussianBlur(m, (0, 0), 1.6)
 
 g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-g = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(6, 6)).apply(g)
-g = np.clip((g.astype(np.float32) - 128) * 1.15 + 122, 0, 255).astype(np.uint8)
+g = cv2.createCLAHE(clipLimit=1.1, tileGridSize=(6, 6)).apply(g)
+g = np.clip((g.astype(np.float32) - 128) * 1.08 + 124, 0, 255).astype(np.uint8)
 
 rgba = np.dstack([g, g, g, m])
 ys, xs = np.where(m > 20)
