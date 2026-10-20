@@ -17,7 +17,7 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 ::-webkit-scrollbar{width:0}
 
-.track{position:relative;height:700vh}
+.track{position:relative;height:560vh}
 .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--bg)}
 .layer{position:absolute;inset:0;pointer-events:none}
 

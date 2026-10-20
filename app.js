@@ -108,16 +108,16 @@ function render(p, time){
   el.hint.style.opacity = (1 - seg(p, .02, .08)).toFixed(3);
 
   // --- 2. portrait scan-in ---
-  const s2 = ease(seg(p, .17, .38));
+  const s2 = ease(seg(p, .17, .34));
   const drift = p * -3;                                                // vh, slow rise while scrolling
-  const mob = W <= 820 && H > 520, pScale = mob ? 1 - .42 * easeIO(seg(p, .38, .47)) : 1;   // phones: make room for the text
+  const mob = W <= 820 && H > 520, pScale = mob ? 1 - .42 * easeIO(seg(p, .31, .38)) : 1;   // phones: make room for the text
   el.pw.style.transform = `translate3d(${(smx * -14 + (1 - s2) * 70).toFixed(1)}px,${(drift * H / 100 + smy * -8).toFixed(1)}px,0) scale(${pScale.toFixed(4)})`;
   el.pimg.style.clipPath = `inset(0 0 ${((1 - s2) * 100).toFixed(2)}% 0)`;
   el.pimg.style.transform = `translate3d(${(smx * -10).toFixed(1)}px,0,0) scale(${(1 + p * .05).toFixed(4)})`;
   const scanning = s2 > 0 && s2 < .995;
   el.scan.style.opacity = scanning ? 1 : 0;
   el.scan.style.top = (s2 * 100).toFixed(2) + '%';
-  el.disc.style.opacity = ease(seg(p, .2, .4)).toFixed(3);
+  el.disc.style.opacity = ease(seg(p, .2, .36)).toFixed(3);
   el.disc.style.transform = `translate3d(${(smx * 22).toFixed(1)}px,${(smy * 14 + (1 - s2) * 40).toFixed(1)}px,0) scale(${(.55 + .45 * s2 + p * .06).toFixed(4)})`;
   el.rings.style.transform = `translate3d(${(smx * -8).toFixed(1)}px,${(smy * -6).toFixed(1)}px,0) scale(${(.92 + .08 * s2 + p * .04).toFixed(4)})`;
   el.rings.style.opacity = (.55 + .45 * s2).toFixed(2);
@@ -129,28 +129,28 @@ function render(p, time){
   el.await.style.opacity = (1 - seg(p, .12, .19)).toFixed(2);
 
   // --- 3. description, revealed word by word ---
-  const aIn = ease(seg(p, .40, .47)), aOut = easeIO(seg(p, .64, .71));
+  const aIn = ease(seg(p, .30, .37)), aOut = easeIO(seg(p, .52, .58));
   el.about.style.opacity = (aIn * (1 - aOut)).toFixed(3);
   el.about.style.transform = `translate3d(0,${((1 - aIn) * 60 - aOut * 80).toFixed(1)}px,0)`;
-  const wp = seg(p, .43, .60) * (words.length + 4);
+  const wp = seg(p, .33, .49) * (words.length + 4);
   words.forEach((w, i) => { w.style.opacity = (.14 + .86 * clamp(wp - i)).toFixed(3); });
 
   // --- 4. links to work ---
-  const wIn = seg(p, .70, .75);
+  const wIn = seg(p, .57, .62);
   el.work.style.opacity = wIn.toFixed(3);
   el.work.style.transform = `translate3d(0,${((1 - ease(wIn)) * 50).toFixed(1)}px,0)`;
   el.rows.forEach((li, i) => {
-    const r = ease(seg(p, .72 + i * .04, .78 + i * .04));
+    const r = ease(seg(p, .59 + i * .035, .65 + i * .035));
     li.style.opacity = r.toFixed(3);
     li.style.transform = `translate3d(${((1 - r) * -40).toFixed(1)}px,0,0)`;
   });
-  const c = ease(seg(p, .91, .97));
+  const c = ease(seg(p, .80, .87));
   el.contact.style.opacity = c.toFixed(3);
   el.contact.style.transform = `translate3d(0,${((1 - c) * 24).toFixed(1)}px,0)`;
   el.work.style.pointerEvents = wIn > .5 ? 'auto' : 'none';
 
   // --- HUD readouts ---
-  const idx = p < .22 ? 0 : p < .46 ? 1 : p < .69 ? 2 : 3;
+  const idx = p < .22 ? 0 : p < .56 ? 1 : 2;
   el.steps.forEach((b, i) => b.classList.toggle('on', i === idx));
   el.marker.style.transform = `translate3d(0,${(p * rulerH).toFixed(1)}px,0)`;
   el.pct.textContent = String(Math.round(p * 100)).padStart(3, '0');
