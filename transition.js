@@ -35,6 +35,7 @@
       ready.then(() => {
         root.classList.remove('pt-cover');
         window.dispatchEvent(new Event('pt:reveal'));
+        window.SFX && window.SFX.arrive();
         ov.classList.remove('in'); ov.classList.add('out');
         setTimeout(() => { ov.classList.remove('on', 'out'); try { sessionStorage.removeItem('pt'); } catch (e) {} }, 1100);
       });
@@ -49,6 +50,7 @@
   function leave(url, d){
     if (busy) return; busy = true;
     if (window.__lenis) window.__lenis.stop();
+    window.SFX && window.SFX.leave();
     build(d); ov.classList.add('on'); void ov.offsetWidth; ov.classList.add('in');
     try { sessionStorage.setItem('pt', JSON.stringify(Object.assign({}, d, { t: Date.now() }))); } catch (e) {}
     setTimeout(() => { location.href = url.href; }, 1000);

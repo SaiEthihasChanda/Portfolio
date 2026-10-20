@@ -41,6 +41,7 @@
   addEventListener('pointerdown', e => {
     if (e.target.closest && e.target.closest('input,textarea')) return;
     ripples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+    if (!(e.target.closest && e.target.closest('a,button'))) window.SFX && window.SFX.ping();
     if (ripples.length > 8) ripples.shift();
   }, { passive: true });
 
@@ -112,6 +113,7 @@
     glitchSetup();
     if (!tint || glitching || H().s2 < .99) return;           // only after the entrance reveal has finished
     glitching = true; window.__pglitch = true; glitchT0 = performance.now();
+    window.SFX && window.SFX.glitch(ms / 1000);
     gcv.style.display = 'block'; img.style.opacity = 0;
     const S = 44, sh = nh / S;
     (function frame(now){
@@ -184,6 +186,17 @@
     wc.globalAlpha = 1;
   }
 
+  /* ---------- sounds tied to the scroll timeline ---------- */
+  let lastStep = -1, revealing = false, locked = false;
+  function watchSound(){
+    const h = H(), step = h.p < .22 ? 0 : h.p < .56 ? 1 : 2;
+    if (lastStep === -1) lastStep = step;
+    else if (step !== lastStep){ lastStep = step; window.SFX && window.SFX.step(); }
+    if (h.s2 > .03 && h.s2 < .97 && !revealing){ revealing = true; locked = false; window.SFX && window.SFX.reveal(); }
+    if (h.s2 <= .01) { revealing = false; locked = false; }
+    if (h.s2 >= .999 && revealing && !locked){ locked = true; window.SFX && window.SFX.lock(); }
+  }
+
   /* ---------- main loop ---------- */
   function loop(now){
     // smooth pointer
@@ -206,7 +219,7 @@
       }
     }
     for (let i = ripples.length - 1; i >= 0; i--){
-      const r = ripples[i], k = (now - r.t) / 900;
+      const r = ripples[i], k = Math.max(0, (now - r.t) / 900);
       if (k >= 1){ ripples.splice(i, 1); continue; }
       const e = 1 - Math.pow(1 - k, 3);
       g.strokeStyle = ACC; g.lineWidth = 2 - k;
@@ -224,9 +237,10 @@
     // scramble kickers when their block fades in
     for (const k of kick){
       const op = k.box ? parseFloat(k.box.style.opacity || '0') : 1;
-      if (op > .6 && !k.on){ k.on = true; scramble(k.el, 700); } else if (op < .15) k.on = false;
+      if (op > .6 && !k.on){ k.on = true; scramble(k.el, 700); window.SFX && window.SFX.scramble(); } else if (op < .15) k.on = false;
     }
     drawWire();
+    watchSound();
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
