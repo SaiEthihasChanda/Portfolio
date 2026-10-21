@@ -96,26 +96,51 @@ PROJECTS = [
     dict(
         slug="shapeshifter", name="ShapeShifter", num="04",
         kicker="WINDOWS DESKTOP APP · PYTHON",
-        tagline="Convert any file to another format in place, straight from File Explorer. Select, press a shortcut, point and click.",
-        meta=[("TYPE", "Windows desktop app"), ("STACK", "Python · PySide6 · PyMuPDF · ffmpeg"), ("VERSION", "2.3.0 · Windows 10 / 11"), ("INSTALL", "Per-user, no admin rights needed")],
-        cta=[("↓ Download ShapeShifter", "../downloads/ShapeShifter-Setup-2.3.0.exe", True, "147 MB")],
+        tagline="Select a file, pick what it becomes. A wheel opens under your mouse with everything that file can turn into, from File Explorer, in place.",
+        meta=[("TYPE", "Windows desktop app"), ("STACK", "Python · PySide6 · PyMuPDF · ffmpeg · pandoc"), ("VERSION", "2.6.0 · Windows 10 / 11"), ("LICENSE", "Free and open source (AGPL)"), ("INSTALL", "Per-user, no admin rights needed")],
+        cta=[("↓ Download ShapeShifter", "../downloads/ShapeShifter-Setup-2.3.0.exe", True, "148 MB"), ("Source on GitHub ↗", "https://github.com/SaiEthihasChanda/shapeshifter", False, "")],
         media=dict(kind="wheel"),
-        stats=[("360+", "file types it knows by name, plus anything it can infer"), ("0", "admin rights needed: it installs for your account only"), ("Ctrl+Alt+C", "opens the wheel for the selected files")],
+        stats=[("366", "file types it knows by name, plus anything it can infer from the contents"), ("4,453", "conversions, direct or chained through several steps"), ("Ctrl+Alt+C", "opens the wheel for the selected files")],
         features=[
-            ("The wheel", "Right-click › Convert to… or press Ctrl+Alt+C. A wheel of everything the file can become appears under your mouse. Past 12 options, they spread over rotating rings."),
-            ("In place", "holiday.jpg becomes holiday.png in the same folder, and the original goes to the Recycle Bin."),
-            ("Knows what a file really is", "It reads byte signatures, containers, text and ffmpeg's media probe, so renamed or extension-less files still work."),
-            ("A graph of conversions", "Every file type is a node and every step an edge, so multi-step routes like DOCX → PDF → PNG are found automatically."),
-            ("Learns reverse conversions", "Convert A → B once and it remembers that B → A is wanted, with a warning badge when the route loses something."),
-            ("Documents keep their pictures", "PDF and Word output keeps images, links, tables, lists and non-Latin text. Nothing is silently dropped."),
+            ("The wheel", "Right-click › Convert to… or press Ctrl+Alt+C. A wheel of everything the file can become appears under your mouse, spreading over rings when there are many options."),
+            ("In place", "holiday.jpg becomes holiday.png in the same folder, and the original follows your setting (Recycle Bin by default). Nothing is sent anywhere."),
+            ("Reads the contents", "It checks signatures, containers and text, so renamed, extension-less and unknown files still work, and it refuses programs, locked files and zip bombs."),
+            ("Offers what is true of your file", "OCR for scans and photos, tables from pictures, searchable PDFs, and filling in a photographed form. Options that cannot work are simply not shown."),
+            ("Properties", "See and change what is hidden inside a file: camera, date and GPS in photos, authors in documents, tags in audio. Edited without recompressing, for one file or forty."),
+            ("Combine and tidy", "Select several files to get one: pictures into a GIF or PDF, CSVs into a workbook, documents into one PDF. Or shrink, resize, split and rotate without changing the type."),
         ],
         how_title=None, steps=None, code=None,
+        tour=True,
         final="Any file. Any format.",
     ),
 ]
 
 
 def esc(s): return html.escape(s, quote=True)
+
+
+TOUR = ""
+_tf = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tour_fragment.html")
+if os.path.exists(_tf):
+    TOUR = open(_tf, encoding="utf8").read()
+    TOUR = TOUR.replace('class="scene', 'data-reveal class="scene').replace('class="tcard', 'data-reveal class="tcard')
+
+
+def tour_block():
+    nav = [("t-bench", "The wheel"), ("t-inferred", "Inferred options"), ("t-props", "Properties"), ("t-smart", "Combine &amp; more"),
+           ("t-finder", "Route finder"), ("t-filetypes", "File types"), ("t-limits", "Limits")]
+    links = "".join(f'<a href="#{i}"><i>{k:02d}</i>{n}</a>' for k, (i, n) in enumerate(nav, 1))
+    return f"""
+  <div class="tour" id="tour">
+    <div class="wrap">
+      <div class="sec-head" data-reveal style="padding-top:clamp(40px,6vw,80px);margin-bottom:0"><h2>Explore everything it can do</h2><span class="tag">[ INTERACTIVE TOUR ]</span></div>
+      <p class="lead" data-reveal>Built from ShapeShifter's real conversion graph: pick a file type, see its wheel, and try the route finder on any pair.</p>
+      <div class="tstats" id="t-stats"></div>
+      <div class="legend" id="t-legend"></div>
+      <nav class="tour-nav" aria-label="Tour sections">{links}</nav>
+      {TOUR}
+    </div>
+  </div>"""
 
 
 def rgb(h): return ",".join(str(int(h[i:i + 2], 16)) for i in (1, 3, 5))
@@ -236,8 +261,9 @@ def page(i, p):
 <meta name="theme-color" content="{SCHEMES[p['slug']]['bn']}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../project.css">
+{'<link rel="stylesheet" href="../tour.css">' if p.get("tour") else ""}
 <link rel="stylesheet" href="../transition.css">
 <script>try{{var d=JSON.parse(sessionStorage.getItem('pt')||'null');if(d&&Date.now()-d.t<8000){{var r=document.documentElement;r.classList.add('pt-cover');r.style.setProperty('--pt-bg',d.bg)}}}}catch(e){{}}</script>
 </head>
@@ -283,6 +309,7 @@ def page(i, p):
     </div>
   </section>
 {how}
+{tour_block() if p.get("tour") else ""}
   <section class="final">
     <div class="wrap">
       <h2 data-reveal>{esc(p['final'])}</h2>
@@ -303,6 +330,7 @@ def page(i, p):
 <script src="../sfx.js"></script>
 <script src="../transition.js"></script>
 <script src="../project.js"></script>
+{'<script src="../tour.js"></script>' if p.get("tour") else ""}
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

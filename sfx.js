@@ -207,7 +207,7 @@
     .sfx-toggle.hum i b{animation-duration:2.2s}
     @keyframes sfxbar{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
     @media (prefers-reduced-motion:reduce){.sfx-toggle i b{animation:none}}
-    @media (max-width:760px){.sfx-wrap{bottom:68px}.sfx-toggle{padding:10px 11px}}`;
+    @media (max-width:760px){.sfx-wrap{flex-direction:row;bottom:40px;gap:4px}.sfx-toggle{padding:8px 8px;font-size:.55rem;gap:6px}}`;
   document.head.append(style);
   const wrap = document.createElement('div'); wrap.className = 'sfx-wrap';
   const mk = (cls, label) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'sfx-toggle ' + cls; b.setAttribute('aria-label', label); return b; };

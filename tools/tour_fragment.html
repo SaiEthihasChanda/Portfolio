@@ -1,0 +1,248 @@
+<section id="t-bench" data-t="bench">
+  <div class="eyebrow">The wheel, built from the real conversion graph</div>
+  <h2>Choose a file type and see its wheel</h2>
+  <p class="lead">Every segment below is a conversion ShapeShifter really offers for that type. Hover or tap one for the route it takes, what is lost on the way, and the ways it can be done.</p>
+  <div class="picker" id="t-picker" role="group" aria-label="Starting file type"></div>
+  <div class="bench">
+    <div class="wheelbox"><svg class="wheel" id="t-wheel" viewBox="0 0 600 600" role="group" aria-label="Conversion wheel"></svg></div>
+    <aside class="panel" id="t-panel" aria-live="polite"></aside>
+  </div>
+  <div class="also" id="t-also"></div>
+</section>
+
+<section id="t-inferred">
+  <div class="eyebrow" style="color:var(--c-inferred)">Inferred · the pink group on the wheel</div>
+  <h2>Options that only exist because it read the file</h2>
+  <p class="lead">A format list says what a JPG can become. It cannot say that <em>this</em> JPG is a photographed form, a table, or a scan of a letter. ShapeShifter looks inside, finds out, and offers what makes sense.</p>
+
+  <div class="gallery">
+
+    <figure class="scene">
+      <div class="sk">Scan or photo → text</div>
+      <h3>Read the words off a picture</h3>
+      <div class="stage">
+        <div class="paper scan" aria-label="A scanned letter">
+          <i style="width:46%"></i><i style="width:88%"></i><i style="width:92%"></i><i style="width:71%"></i><i class="gap"></i>
+          <i style="width:84%"></i><i style="width:90%"></i><i style="width:38%"></i>
+        </div>
+        <span class="to" aria-hidden="true">→</span>
+        <div class="out mono" aria-label="Recognised text">
+          <b>INVOICE 2041</b><br>Date: 14-07-2025<br>Bill to: Chennai Library<br>Total due: 4,250.00<br><span class="dim">…</span>
+        </div>
+      </div>
+      <figcaption>Windows OCR, built into Windows. Output as <span class="mono">TXT, Markdown, HTML</span> or Word (the wheel asks which Word you want).</figcaption>
+    </figure>
+
+    <figure class="scene">
+      <div class="sk">Picture of a table → spreadsheet</div>
+      <h3>Turn a photographed table into cells</h3>
+      <div class="stage">
+        <div class="paper photo" aria-label="A photographed table">
+          <div class="pt"><span>Item</span><span>Qty</span><span>Price</span><span>Pencil</span><span>12</span><span>1.50</span><span>Notebook</span><span>5</span><span>3.25</span><span>Ruler</span><span>8</span><span>2.00</span></div>
+        </div>
+        <span class="to" aria-hidden="true">→</span>
+        <div class="grid3" aria-label="Spreadsheet result">
+          <span class="h"></span><span class="h">A</span><span class="h">B</span><span class="h">C</span>
+          <span class="h">1</span><b>Item</b><b>Qty</b><b>Price</b>
+          <span class="h">2</span><span>Pencil</span><span class="n">12</span><span class="n">1.5</span>
+          <span class="h">3</span><span>Notebook</span><span class="n">5</span><span class="n">3.25</span>
+          <span class="h">4</span><span>Ruler</span><span class="n">8</span><span class="n">2</span>
+        </div>
+      </div>
+      <figcaption>Rows and columns are found from where the words sit. Numbers become numbers. It warns you to check the columns, because OCR can misread a letter.</figcaption>
+    </figure>
+
+    <figure class="scene">
+      <div class="sk">Scanned PDF → searchable PDF</div>
+      <h3>Make a scan searchable, looking exactly the same</h3>
+      <div class="stage">
+        <div class="paper scan" aria-label="A scanned page"><i style="width:50%"></i><i style="width:90%"></i><i style="width:86%"></i><i class="gap"></i><i style="width:92%"></i><i style="width:60%"></i></div>
+        <span class="to" aria-hidden="true">→</span>
+        <div class="paper scan found" aria-label="The same page with a search hit">
+          <div class="search mono">🔍 invoice <span>2 matches</span></div>
+          <i style="width:50%" class="hit"></i><i style="width:90%"></i><i style="width:86%"></i><i class="gap"></i><i style="width:92%" class="hit"></i><i style="width:60%"></i>
+        </div>
+      </div>
+      <figcaption>An invisible text layer is laid over the picture, so you can search and copy from it. Only offered for PDFs that actually have scanned pages.</figcaption>
+    </figure>
+
+    <figure class="scene wide">
+      <div class="sk">Form picture → filled form</div>
+      <h3>Find the blanks, boxes and signature line, then fill them in</h3>
+      <div class="stage">
+        <div class="form det" aria-label="Form with the blanks it found outlined">
+          <h4>LIBRARY MEMBERSHIP APPLICATION</h4>
+          <div class="f"><span>Full name:</span><span class="line"><u>text</u></span></div>
+          <div class="f"><span>Date of birth:</span><span class="line"><u>text</u></span></div>
+          <div class="boxes"><span><span class="box"><u>box</u></span>Student</span><span><span class="box"><u>box</u></span>Staff</span><span><span class="box"><u>box</u></span>Visitor</span></div>
+          <div class="f"><span>Signature:</span><span class="sig"><u>signature</u></span></div>
+        </div>
+        <span class="to" aria-hidden="true">→</span>
+        <div class="form" aria-label="The filled form">
+          <h4>LIBRARY MEMBERSHIP APPLICATION</h4>
+          <div class="f"><span>Full name:</span><span class="line">Sai Ethihas Chanda</span></div>
+          <div class="f"><span>Date of birth:</span><span class="line">12-03-2004</span></div>
+          <div class="boxes"><span><span class="box">✓</span>Student</span><span><span class="box"></span>Staff</span><span><span class="box"></span>Visitor</span></div>
+          <div class="f"><span>Signature:</span><span class="sig"><svg viewBox="0 0 160 38" width="150" height="36" aria-hidden="true"><path d="M4 28 C 14 4, 22 4, 26 20 S 38 34, 44 14 S 60 2, 64 22 S 86 30, 98 12 S 118 6, 124 24 L 156 18" fill="none" stroke="#1c34a0" stroke-width="2.2" stroke-linecap="round"/></svg></span></div>
+        </div>
+      </div>
+      <figcaption>Works on photos, scans and PDFs (every page, and real fillable PDF fields stay fillable). You type, tick and draw or import a signature; a live preview shows the result. Missed a field? Click where it goes. The original is never changed.</figcaption>
+    </figure>
+
+    <figure class="scene">
+      <div class="sk">Photo → Word</div>
+      <h3>Put the picture on a Word page and write next to it</h3>
+      <div class="stage">
+        <svg class="pic" viewBox="0 0 120 80" role="img" aria-label="A photograph of a lake with mountains"><rect width="120" height="80" fill="#7fb6d8"/><circle cx="92" cy="20" r="9" fill="#ffd65a"/><path d="M0 62 L30 28 L52 52 L74 24 L120 66 L120 80 L0 80Z" fill="#4c6b7a"/><rect y="64" width="120" height="16" fill="#2f5f7a"/></svg>
+        <span class="to" aria-hidden="true">→</span>
+        <div class="page" aria-label="A Word page holding the picture and typed text">
+          <svg viewBox="0 0 120 80" aria-hidden="true"><rect width="120" height="80" fill="#7fb6d8"/><circle cx="92" cy="20" r="9" fill="#ffd65a"/><path d="M0 62 L30 28 L52 52 L74 24 L120 66 L120 80 L0 80Z" fill="#4c6b7a"/><rect y="64" width="120" height="16" fill="#2f5f7a"/></svg>
+          <p>Lake day, July <span class="caret"></span></p>
+        </div>
+      </div>
+      <figcaption>A photo has no text to read, so there is nothing to ask: it goes straight onto the page. A picture with text asks <em>Text (OCR)</em> or <em>Picture</em>. Convert the document back to an image or PDF when you are done.</figcaption>
+    </figure>
+
+    <figure class="scene">
+      <div class="sk">PDF pages → one table</div>
+      <h3>Join a table that runs across pages</h3>
+      <div class="stage">
+        <div class="pages">
+          <div class="pg"><b>Date</b><b>Day</b><span>14-07</span><span>Mon</span><span>15-07</span><span>Tue</span></div>
+          <div class="pg"><b>Date</b><b>Day</b><span>16-07</span><span>Wed</span><span>17-07</span><span>Thu</span></div>
+        </div>
+        <span class="to" aria-hidden="true">→</span>
+        <div class="grid3 two" aria-label="One sheet">
+          <span class="h"></span><span class="h">A</span><span class="h">B</span>
+          <span class="h">1</span><b>Date</b><b>Day</b>
+          <span class="h">2</span><span>14-07</span><span>Mon</span><span class="h">3</span><span>15-07</span><span>Tue</span>
+          <span class="h">4</span><span>16-07</span><span>Wed</span><span class="h">5</span><span>17-07</span><span>Thu</span>
+        </div>
+      </div>
+      <figcaption>A repeated header on the next page marks a continuation, so a 12-page timetable becomes one sheet named “Pages 1-12”. Dates keep their dashes.</figcaption>
+    </figure>
+
+  </div>
+
+  <div class="inspector">
+    <div>
+      <div class="eyebrow">It also leaves things out</div>
+      <h3>Only what is true of <em>your</em> file shows up</h3>
+      <p class="note">Switch what is inside a file and watch its wheel change. Options that could not work simply are not offered.</p>
+      <div class="switches" id="t-switches"></div>
+    </div>
+    <div class="live" id="t-live" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="t-props">
+  <div class="eyebrow" style="color:var(--c-tool)">New in 2.6 · the grey group on the wheel</div>
+  <h2>Properties: see and change what is hidden inside a file</h2>
+  <p class="lead">Every photo carries its camera, date and often its GPS position. Every document carries an author. <b>PROPERTIES</b> shows all of it in one window, lets you change or remove any of it, and leaves the picture, the text and the sound alone.</p>
+  <div class="props">
+    <div class="pane" aria-live="polite">
+      <div class="tabs2" id="t-ptabs" role="group" aria-label="Choose a kind of file"></div>
+      <h3 id="t-pname"></h3>
+      <div id="t-prows"></div>
+      <div class="tabs2" id="t-pacts" role="group" aria-label="Choose what to do"></div>
+      <p class="promise" id="t-pnote"></p>
+    </div>
+    <div class="pane">
+      <h3>Works on</h3>
+      <div class="opt on" style="--cc:var(--c-image)"><b>Pictures</b><span>Author, copyright, description, date taken, camera, lens, GPS. JPEG and PNG are edited without recompressing: no quality loss.</span></div>
+      <div class="opt on" style="--cc:var(--c-document)"><b>PDF · Word · Excel · PowerPoint · OpenDocument</b><span>Title, subject, keywords, author, company, dates.</span></div>
+      <div class="opt on" style="--cc:var(--c-audio)"><b>Audio and video</b><span>Title, artist, album, genre, year, track. Written without re-encoding.</span></div>
+      <div class="opt on" style="--cc:var(--c-tool)"><b>Any of them</b><span>The file's own created and modified dates.</span></div>
+      <h3>Also</h3>
+      <div class="opt on" style="--cc:var(--c-tool)"><b>Many files</b><span>Select 40 photos and set the same author on all of them in one go.</span></div>
+      <div class="opt on" style="--cc:var(--c-tool)"><b>Scriptable</b><span><span class="mono">shapeshifter meta photo.jpg --set Author=Ada --no-location</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="t-smart">
+  <div class="eyebrow">And beyond converting</div>
+  <h2>It asks only when needed, combines files, and works on files without changing their type</h2>
+  <div class="tcards">
+    <article class="tcard">
+      <div class="k" style="color:var(--c-document)">Asks how</div>
+      <h3>One target, several ways, a question only when it matters</h3>
+      <div class="table"><table>
+        <thead><tr><th>You pick</th><th>Choices it offers</th></tr></thead>
+        <tbody id="t-ways"></tbody>
+      </table></div>
+      <p class="note">A one-page PDF or a still GIF converts straight away. The question appears only when the file has pages, frames or sheets to choose between.</p>
+    </article>
+    <article class="tcard">
+      <div class="k" style="color:var(--c-image)">Combine</div>
+      <h3>Select several files and get one</h3>
+      <div class="table"><table>
+        <thead><tr><th>Select</th><th>Get</th></tr></thead>
+        <tbody>
+          <tr><td>Pictures</td><td>Animated GIF or WebP, multi-page TIFF, PDF, slide deck, slideshow video</td></tr>
+          <tr><td>PDFs and pictures</td><td>One PDF</td></tr>
+          <tr><td>CSV, TSV, Excel</td><td>One workbook, a sheet each</td></tr>
+          <tr><td>Word, Markdown, HTML, text</td><td>One PDF, DOCX or Markdown</td></tr>
+          <tr><td>Decks · audio · video · fonts</td><td>One deck · one clip · one TTC</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Files are taken in name order (frame2 before frame10). Originals are never removed.</p>
+    </article>
+    <article class="tcard">
+      <div class="k" style="color:var(--c-tool)">Same format</div>
+      <h3>Things you do to a file without changing its type</h3>
+      <div class="table"><table>
+        <thead><tr><th>Kind</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr><td>Pictures</td><td>Smaller · Resize · Rotate / flip · Remove location data</td></tr>
+          <tr><td>PDF</td><td>Smaller · Split into pages · Get pictures · Rotate</td></tr>
+          <tr><td>Video</td><td>Smaller · No sound</td></tr>
+          <tr><td>Audio</td><td>Even out the volume · Smaller</td></tr>
+          <tr><td>JSON, XML, text</td><td>Tidy · Fix encoding and line endings</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">The result is a new file such as <span class="mono">photo (smaller).jpg</span>; the original follows your setting (Recycle Bin by default).</p>
+    </article>
+    <article class="tcard">
+      <div class="k" style="color:var(--c-document)">Multi-step</div>
+      <h3>When there is no direct converter, it chains them</h3>
+      <p>The planner picks the cheapest route that loses the least, such as a slide deck to PNG pictures, or a database to a Word table.</p>
+      <div class="tsteps"><span class="tstep">PPTX</span><span class="arrow">→</span><span class="tstep">PDF</span><span class="arrow">→</span><span class="tstep">PNG, one per slide</span></div>
+      <div class="tsteps"><span class="tstep">SQLite</span><span class="arrow">→</span><span class="tstep">Excel</span><span class="arrow">→</span><span class="tstep">Word table</span></div>
+      <div class="tsteps"><span class="tstep">Picture of a table</span><span class="arrow">→</span><span class="tstep">OCR</span><span class="arrow">→</span><span class="tstep">XLSX</span></div>
+      <p class="note">Try any pair in the route finder below.</p>
+    </article>
+    <article class="tcard">
+      <div class="k" style="color:var(--c-archive)">Safe by default</div>
+      <h3>It refuses what could hurt</h3>
+      <p>Programs and scripts, password-protected files, archives that try to write outside their folder, zip bombs, files that claim to be one thing and are another. Private keys can only be re-encoded, never turned into documents. Nothing is sent anywhere.</p>
+    </article>
+  </div>
+</section>
+
+<section id="t-finder">
+  <div class="eyebrow">Any file type to any other</div>
+  <h2>Route finder</h2>
+  <p class="lead">Pick a starting type and a target. The answer is the route ShapeShifter would take from this graph.</p>
+  <div class="finder">
+    <label>From<select id="t-from"></select></label>
+    <div class="to" aria-hidden="true">→</div>
+    <label>To<select id="t-to"></select></label>
+  </div>
+  <div class="examples" id="t-examples"></div>
+  <div class="result" id="t-result" aria-live="polite"></div>
+</section>
+
+<section id="t-filetypes">
+  <div class="eyebrow">Everything it knows</div>
+  <h2 id="t-atlasTitle">File types</h2>
+  <p class="lead">Dashed types are recognised but deliberately not converted (programs, keys) or need an engine you may not have installed, such as LibreOffice or 7-Zip.</p>
+  <div class="atlas" id="t-atlas"></div>
+</section>
+
+<section id="t-limits"><div class="eyebrow">The fine print</div><h2>Honest limits</h2><ul>
+    <li>Old .doc, .xls and .ppt files give their text, tables and values, not formatting or pictures. LibreOffice does them better when installed.</li>
+    <li>Slides are redrawn from their shapes, so fonts, effects and animations are simplified. Camera RAW uses the camera's embedded full-size preview, not developed sensor data.</li>
+    <li>Not covered: Parquet, Arrow, Avro, HDF5, DJVU, DWG, WOFF2, Apple Pages, Numbers and Keynote, Access, MIDI, Flash.</li>
+    <li>The installer is not code-signed yet, so SmartScreen may warn: choose “More info”, then “Run anyway”.</li>
+  </ul><p class="note" style="margin-top:14px">Figures on this page come from the conversion graph of ShapeShifter 2.6.0 on a machine with ffmpeg and pandoc installed; LibreOffice and 7-Zip were not, so a few more routes appear when they are.</p></section>
