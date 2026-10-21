@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tether — Ethihas</title>
-<meta name="description" content="Keeps files and folders identical to a central source of truth, wherever they live on Windows or Linux.">
+<meta name="description" content="Keeps a shared file identical wherever it is pulled. A copy follows the file through moves and renames, undoes local edits until you ask to change it, and sends only the parts that changed.">
 <meta name="theme-color" content="#08201c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../project.css">
-
+<link rel="stylesheet" href="../tether-ref.css">
 <link rel="stylesheet" href="../transition.css">
 <script>try{var d=JSON.parse(sessionStorage.getItem('pt')||'null');if(d&&Date.now()-d.t<8000){var r=document.documentElement;r.classList.add('pt-cover');r.style.setProperty('--pt-bg',d.bg)}}catch(e){}</script>
 </head>
@@ -33,9 +33,10 @@
       <div class="wrap">
         <div class="kicker">[ PROJECT 02 ] FILE SYNC · CLI + CLOUD</div>
         <h1 class="title">Tether</h1>
-        <p class="tagline">Keeps files and folders identical to a central source of truth, wherever they live on Windows or Linux.</p>
+        <p class="tagline">Keeps a shared file identical wherever it is pulled. A copy follows the file through moves and renames, undoes local edits until you ask to change it, and sends only the parts that changed.</p>
         <div class="cta">
           <a class="btn primary" href="https://tether-b10cf.web.app" target="_blank" rel="noopener">Open the console ↗</a>
+          <a class="btn" href="#tref">CLI reference ↓</a>
           <a class="btn" href="#overview">Details ↓</a>
         </div>
       </div>
@@ -51,34 +52,67 @@
 
   <section class="sec" id="overview">
     <div class="wrap ov">
-      <div data-reveal><dl class="readout"><div><dt>TYPE</dt><dd>File sync for teams</dd></div><div><dt>STACK</dt><dd>Node.js · SQLite · chunked delta sync</dd></div><div><dt>BUILT WITH</dt><dd>Firebase (Firestore, Storage, Auth) · React console</dd></div><div><dt>STATUS</dt><dd>Live</dd></div></dl></div>
-      <div class="stats"><div class="stat" data-reveal style="--i:0"><b>1 of 241</b><span>chunks sent after a small edit: 9 KB over the wire</span></div><div class="stat" data-reveal style="--i:1"><b>121</b><span>end-to-end tests with real servers, daemons and browsers</span></div><div class="stat" data-reveal style="--i:2"><b>2</b><span>platforms: Windows and Linux</span></div></div>
+      <div data-reveal><dl class="readout"><div><dt>TYPE</dt><dd>File sync for teams</dd></div><div><dt>INSTALL</dt><dd>npm i -g tether-sync</dd></div><div><dt>VERSION</dt><dd>tether-sync 0.4.0 · Node 22.13+</dd></div><div><dt>BUILT WITH</dt><dd>Firebase (Firestore, Storage, Auth) · React console</dd></div><div><dt>STATUS</dt><dd>Live</dd></div></dl></div>
+      <div class="stats"><div class="stat" data-reveal style="--i:0"><b>1 of 241</b><span>chunks sent after a small edit: 9 KB over the wire</span></div><div class="stat" data-reveal style="--i:1"><b>35</b><span>commands, from login to live editing</span></div><div class="stat" data-reveal style="--i:2"><b>121</b><span>end-to-end tests with real servers, daemons and browsers</span></div></div>
     </div>
   </section>
 
   <section class="sec" style="padding-top:0">
     <div class="wrap">
       <div class="sec-head" data-reveal><h2>What it does</h2><span class="tag">[ FEATURES ]</span></div>
-      <div class="grid"><article class="card" data-reveal style="--i:0"><span class="n">01</span><h3>A CLI and a background daemon</h3><p>The tether command manages files; tetherd keeps them in sync in the background and starts at login.</p></article><article class="card" data-reveal style="--i:1"><span class="n">02</span><h3>Delta sync</h3><p>Files are split into content-defined chunks and only the missing chunks travel, so a one-line edit stays tiny.</p></article><article class="card" data-reveal style="--i:2"><span class="n">03</span><h3>Share with an ID</h3><p>Manage a file, get a share ID, and run tether pull on another machine or account.</p></article><article class="card" data-reveal style="--i:0"><span class="n">04</span><h3>Live editing sessions</h3><p>With tether edit --realtime, every save is pushed live to everyone until you run tether done.</p></article><article class="card" data-reveal style="--i:1"><span class="n">05</span><h3>Git-aware</h3><p>Inside a git repo you choose keep, skip or follow, so Tether never gets in the way of git status or pulls.</p></article><article class="card" data-reveal style="--i:2"><span class="n">06</span><h3>Web console and roles</h3><p>Create repos, invite editors by email and review everything in the console. Desktop notifications cover conflicts and revoked access.</p></article></div>
+      <div class="grid"><article class="card" data-reveal style="--i:0"><span class="n">01</span><h3>A CLI and a background daemon</h3><p>The tether command manages files; tetherd keeps them in sync in the background, and can start at login on Windows or with systemd on Linux.</p></article><article class="card" data-reveal style="--i:1"><span class="n">02</span><h3>Follows the file</h3><p>Move or rename a managed file and Tether still knows it. If a drive disappears, tether locate re-links the copy by content.</p></article><article class="card" data-reveal style="--i:2"><span class="n">03</span><h3>Delta sync</h3><p>Files are split into content-defined chunks and only the missing chunks travel, so a one-line edit stays tiny.</p></article><article class="card" data-reveal style="--i:0"><span class="n">04</span><h3>Edit on purpose, live if you like</h3><p>Local edits are undone until you run tether edit. Editors can go live with --realtime: every save reaches everyone within seconds.</p></article><article class="card" data-reveal style="--i:1"><span class="n">05</span><h3>Access and history</h3><p>Share by ID with editors, viewers or an allowlist, rotate the ID, and roll back to any version. Nothing is ever overwritten.</p></article><article class="card" data-reveal style="--i:2"><span class="n">06</span><h3>Git-aware</h3><p>Inside a git repo choose keep, follow or skip, so Tether never gets in the way of git status or pulls.</p></article></div>
     </div>
   </section>
 
   <section class="sec">
     <div class="wrap">
-      <div class="sec-head" data-reveal><h2>Try it in four commands</h2><span class="tag">[ HOW IT WORKS ]</span></div>
-      <div class="steps"><div class="step" data-reveal style="--i:0"><i></i><span class="mono">LOGIN</span><h3>Sign in</h3><p>tether login opens a browser sign-in. The hosted service is the default.</p></div><div class="step" data-reveal style="--i:1"><i></i><span class="mono">MANAGE</span><h3>Put a file under Tether</h3><p>tether manage prints a share ID for the file you chose.</p></div><div class="step" data-reveal style="--i:2"><i></i><span class="mono">PULL</span><h3>Get it anywhere</h3><p>tether pull with that ID creates an identical copy on any other machine.</p></div></div>
-      <div class="code" data-reveal><div class="bar"><i></i> TERMINAL</div><pre><span class="k">$</span> tether login
+      <div class="sec-head" data-reveal><h2>Try it in a few commands</h2><span class="tag">[ HOW IT WORKS ]</span></div>
+      <div class="steps"><div class="step" data-reveal style="--i:0"><i></i><span class="mono">INSTALL</span><h3>Install and sign in</h3><p>npm i -g tether-sync, then tether login opens a browser sign-in. Needs Node 22.13 or newer.</p></div><div class="step" data-reveal style="--i:1"><i></i><span class="mono">MANAGE</span><h3>Put a file under Tether</h3><p>tether manage prints a share ID for the file you chose.</p></div><div class="step" data-reveal style="--i:2"><i></i><span class="mono">PULL</span><h3>Get it anywhere</h3><p>tether pull with that ID creates an identical, managed copy on any other machine.</p></div></div>
+      <div class="code" data-reveal><div class="bar"><i></i> TERMINAL</div><pre><span class="k">$</span> npm i -g tether-sync
+<span class="k">$</span> tether login
 <span class="k">$</span> tether repo create team
 <span class="k">$</span> tether manage .editorconfig --repo team   <span class="c"># prints a share ID</span>
 <span class="k">$</span> tether pull abcd-efgh-jkmn                   <span class="c"># on another machine</span></pre></div>
     </div>
   </section>
 
+  <div class="tref" id="tref">
+    <div class="wrap">
+      <section style="padding-top:clamp(40px,6vw,80px)">
+        <div class="tr-eyebrow">[ CLI REFERENCE ] tether-sync 0.4.0</div>
+        <h2 data-reveal>Every command, in one place</h2>
+        <p class="tr-lead" data-reveal>Grouped by what you are doing. Try a workflow, filter the full reference, or explore the modes a managed file can be in.</p>
+        <div class="tr-install"><span class="tr-cmdbox"><span><i>$</i>npm i -g tether-sync</span><button type="button" class="tr-copy" data-text="npm i -g tether-sync">Copy</button></span><span class="tr-pill">NODE 22.13+</span><span class="tr-pill">WINDOWS · LINUX</span></div>
+      </section>
+      <section id="c-workflows">
+        <div class="tr-eyebrow">01 · COMMON WORKFLOWS</div>
+        <h2>Start from what you want to do</h2>
+        <div class="tr-tabs" id="tr-tabs" role="group" aria-label="Workflows"></div>
+        <div class="tr-steps" id="tr-steps"></div>
+      </section>
+      <section id="c-reference">
+        <div class="tr-eyebrow">02 · FULL REFERENCE</div>
+        <h2>Filter every command</h2>
+        <div class="tr-search"><input id="tr-q" type="search" placeholder="Filter commands, e.g. share, conflict, git, realtime" aria-label="Filter commands" autocomplete="off"><div class="tr-count" id="tr-count"></div></div>
+        <div class="tr-layout"><nav class="tr-index" id="tr-index" aria-label="Command groups"></nav><div id="tr-groups"></div></div>
+      </section>
+      <section id="c-concepts">
+        <div class="tr-eyebrow">03 · MODES &amp; CHOICES</div>
+        <h2>What state is a file in?</h2>
+        <p class="tr-lead">The words <code>tether status</code> and <code>tether done</code> use. Hover or tap a mode.</p>
+        <div class="tr-modes"><div class="tr-mlist" id="tr-mlist"></div><div class="tr-mpanel" id="tr-mpanel" aria-live="polite"></div></div>
+        <h2 style="margin-top:clamp(40px,6vw,70px)">When Tether asks, you choose</h2>
+        <p class="tr-lead">Conflicts, deleted files and moved files all come down to six answers.</p>
+        <div class="tr-choices" id="tr-choices"></div>
+      </section>
+    </div>
+  </div>
   <section class="final">
     <div class="wrap">
       <h2 data-reveal>One source of truth.</h2>
       <div class="cta" data-reveal>
         <a class="btn primary" href="https://tether-b10cf.web.app" target="_blank" rel="noopener">Open the console ↗</a>
+          <a class="btn" href="#tref">CLI reference ↓</a>
       </div>
     </div>
   </section>
@@ -94,7 +128,7 @@
 <script src="../sfx.js"></script>
 <script src="../transition.js"></script>
 <script src="../project.js"></script>
-
+<script src="../tether-ref.js"></script>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>

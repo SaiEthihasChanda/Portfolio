@@ -46,24 +46,25 @@ PROJECTS = [
     dict(
         slug="tether", name="Tether", num="02",
         kicker="FILE SYNC · CLI + CLOUD",
-        tagline="Keeps files and folders identical to a central source of truth, wherever they live on Windows or Linux.",
-        meta=[("TYPE", "File sync for teams"), ("STACK", "Node.js · SQLite · chunked delta sync"), ("BUILT WITH", "Firebase (Firestore, Storage, Auth) · React console"), ("STATUS", "Live")],
-        cta=[("Open the console ↗", "https://tether-b10cf.web.app", True, "")],
+        tagline="Keeps a shared file identical wherever it is pulled. A copy follows the file through moves and renames, undoes local edits until you ask to change it, and sends only the parts that changed.",
+        meta=[("TYPE", "File sync for teams"), ("INSTALL", "npm i -g tether-sync"), ("VERSION", "tether-sync 0.4.0 · Node 22.13+"), ("BUILT WITH", "Firebase (Firestore, Storage, Auth) · React console"), ("STATUS", "Live")],
+        cta=[("Open the console ↗", "https://tether-b10cf.web.app", True, ""), ("CLI reference ↓", "#tref", False, "")],
         media=dict(kind="video", src="../assets/videos/tether.mp4", poster="../assets/videos/tether.jpg"),
-        stats=[("1 of 241", "chunks sent after a small edit: 9 KB over the wire"), ("121", "end-to-end tests with real servers, daemons and browsers"), ("2", "platforms: Windows and Linux")],
+        stats=[("1 of 241", "chunks sent after a small edit: 9 KB over the wire"), ("35", "commands, from login to live editing"), ("121", "end-to-end tests with real servers, daemons and browsers")],
         features=[
-            ("A CLI and a background daemon", "The tether command manages files; tetherd keeps them in sync in the background and starts at login."),
+            ("A CLI and a background daemon", "The tether command manages files; tetherd keeps them in sync in the background, and can start at login on Windows or with systemd on Linux."),
+            ("Follows the file", "Move or rename a managed file and Tether still knows it. If a drive disappears, tether locate re-links the copy by content."),
             ("Delta sync", "Files are split into content-defined chunks and only the missing chunks travel, so a one-line edit stays tiny."),
-            ("Share with an ID", "Manage a file, get a share ID, and run tether pull on another machine or account."),
-            ("Live editing sessions", "With tether edit --realtime, every save is pushed live to everyone until you run tether done."),
-            ("Git-aware", "Inside a git repo you choose keep, skip or follow, so Tether never gets in the way of git status or pulls."),
-            ("Web console and roles", "Create repos, invite editors by email and review everything in the console. Desktop notifications cover conflicts and revoked access."),
+            ("Edit on purpose, live if you like", "Local edits are undone until you run tether edit. Editors can go live with --realtime: every save reaches everyone within seconds."),
+            ("Access and history", "Share by ID with editors, viewers or an allowlist, rotate the ID, and roll back to any version. Nothing is ever overwritten."),
+            ("Git-aware", "Inside a git repo choose keep, follow or skip, so Tether never gets in the way of git status or pulls."),
         ],
-        how_title="Try it in four commands",
-        steps=[("LOGIN", "Sign in", "tether login opens a browser sign-in. The hosted service is the default."),
+        how_title="Try it in a few commands",
+        steps=[("INSTALL", "Install and sign in", "npm i -g tether-sync, then tether login opens a browser sign-in. Needs Node 22.13 or newer."),
                ("MANAGE", "Put a file under Tether", "tether manage prints a share ID for the file you chose."),
-               ("PULL", "Get it anywhere", "tether pull with that ID creates an identical copy on any other machine.")],
-        code=("TERMINAL", '<span class="k">$</span> tether login\n<span class="k">$</span> tether repo create team\n<span class="k">$</span> tether manage .editorconfig --repo team   <span class="c"># prints a share ID</span>\n<span class="k">$</span> tether pull abcd-efgh-jkmn                   <span class="c"># on another machine</span>'),
+               ("PULL", "Get it anywhere", "tether pull with that ID creates an identical, managed copy on any other machine.")],
+        code=("TERMINAL", '<span class="k">$</span> npm i -g tether-sync\n<span class="k">$</span> tether login\n<span class="k">$</span> tether repo create team\n<span class="k">$</span> tether manage .editorconfig --repo team   <span class="c"># prints a share ID</span>\n<span class="k">$</span> tether pull abcd-efgh-jkmn                   <span class="c"># on another machine</span>'),
+        ref=True,
         final="One source of truth.",
     ),
     dict(
@@ -126,6 +127,41 @@ if os.path.exists(_tf):
     TOUR = TOUR.replace('class="scene', 'data-reveal class="scene').replace('class="tcard', 'data-reveal class="tcard')
 
 
+def ref_block():
+    return """
+  <div class="tref" id="tref">
+    <div class="wrap">
+      <section style="padding-top:clamp(40px,6vw,80px)">
+        <div class="tr-eyebrow">[ CLI REFERENCE ] tether-sync 0.4.0</div>
+        <h2 data-reveal>Every command, in one place</h2>
+        <p class="tr-lead" data-reveal>Grouped by what you are doing. Try a workflow, filter the full reference, or explore the modes a managed file can be in.</p>
+        <div class="tr-install"><span class="tr-cmdbox"><span><i>$</i>npm i -g tether-sync</span><button type="button" class="tr-copy" data-text="npm i -g tether-sync">Copy</button></span><span class="tr-pill">NODE 22.13+</span><span class="tr-pill">WINDOWS · LINUX</span></div>
+      </section>
+      <section id="c-workflows">
+        <div class="tr-eyebrow">01 · COMMON WORKFLOWS</div>
+        <h2>Start from what you want to do</h2>
+        <div class="tr-tabs" id="tr-tabs" role="group" aria-label="Workflows"></div>
+        <div class="tr-steps" id="tr-steps"></div>
+      </section>
+      <section id="c-reference">
+        <div class="tr-eyebrow">02 · FULL REFERENCE</div>
+        <h2>Filter every command</h2>
+        <div class="tr-search"><input id="tr-q" type="search" placeholder="Filter commands, e.g. share, conflict, git, realtime" aria-label="Filter commands" autocomplete="off"><div class="tr-count" id="tr-count"></div></div>
+        <div class="tr-layout"><nav class="tr-index" id="tr-index" aria-label="Command groups"></nav><div id="tr-groups"></div></div>
+      </section>
+      <section id="c-concepts">
+        <div class="tr-eyebrow">03 · MODES &amp; CHOICES</div>
+        <h2>What state is a file in?</h2>
+        <p class="tr-lead">The words <code>tether status</code> and <code>tether done</code> use. Hover or tap a mode.</p>
+        <div class="tr-modes"><div class="tr-mlist" id="tr-mlist"></div><div class="tr-mpanel" id="tr-mpanel" aria-live="polite"></div></div>
+        <h2 style="margin-top:clamp(40px,6vw,70px)">When Tether asks, you choose</h2>
+        <p class="tr-lead">Conflicts, deleted files and moved files all come down to six answers.</p>
+        <div class="tr-choices" id="tr-choices"></div>
+      </section>
+    </div>
+  </div>"""
+
+
 def tour_block():
     nav = [("t-bench", "The wheel"), ("t-inferred", "Inferred options"), ("t-props", "Properties"), ("t-smart", "Combine &amp; more"),
            ("t-finder", "Route finder"), ("t-filetypes", "File types"), ("t-limits", "Limits")]
@@ -163,7 +199,7 @@ def cta_buttons(p):
         if "downloads/" in href:                       # installer: public link, local file only while developing
             local, href = href, DOWNLOAD_URL
         ext = href.startswith("http") and not local
-        attrs = ' target="_blank" rel="noopener"' if ext else (f' download data-local="{esc(local)}"' if local else " download")
+        attrs = ' target="_blank" rel="noopener"' if ext else (f' download data-local="{esc(local)}"' if local else ("" if href.startswith("#") else " download"))
         small = f" <small>{esc(note)}</small>" if note else ""
         out.append(f'<a class="btn{" primary" if primary else ""}" href="{esc(href)}"{attrs}>{esc(label)}{small}</a>')
     return "\n          ".join(out)
@@ -263,7 +299,7 @@ def page(i, p):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../project.css">
-{'<link rel="stylesheet" href="../tour.css">' if p.get("tour") else ""}
+{'<link rel="stylesheet" href="../tour.css">' if p.get("tour") else ""}{'<link rel="stylesheet" href="../tether-ref.css">' if p.get("ref") else ""}
 <link rel="stylesheet" href="../transition.css">
 <script>try{{var d=JSON.parse(sessionStorage.getItem('pt')||'null');if(d&&Date.now()-d.t<8000){{var r=document.documentElement;r.classList.add('pt-cover');r.style.setProperty('--pt-bg',d.bg)}}}}catch(e){{}}</script>
 </head>
@@ -309,7 +345,7 @@ def page(i, p):
     </div>
   </section>
 {how}
-{tour_block() if p.get("tour") else ""}
+{tour_block() if p.get("tour") else ""}{ref_block() if p.get("ref") else ""}
   <section class="final">
     <div class="wrap">
       <h2 data-reveal>{esc(p['final'])}</h2>
@@ -330,7 +366,7 @@ def page(i, p):
 <script src="../sfx.js"></script>
 <script src="../transition.js"></script>
 <script src="../project.js"></script>
-{'<script src="../tour.js"></script>' if p.get("tour") else ""}
+{'<script src="../tour.js"></script>' if p.get("tour") else ""}{'<script src="../tether-ref.js"></script>' if p.get("ref") else ""}
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
