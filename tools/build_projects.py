@@ -100,7 +100,7 @@ PROJECTS = [
         tagline="Select a file, pick what it becomes. A wheel opens under your mouse with everything that file can turn into, from File Explorer, in place.",
         meta=[("TYPE", "Windows desktop app"), ("STACK", "Python · PySide6 · PyMuPDF · ffmpeg · pandoc"), ("VERSION", "2.6.0 · Windows 10 / 11"), ("LICENSE", "Free and open source (AGPL)"), ("INSTALL", "Per-user, no admin rights needed")],
         cta=[("↓ Download ShapeShifter", "../downloads/ShapeShifter-Setup-2.3.0.exe", True, "148 MB"), ("Source on GitHub ↗", "https://github.com/SaiEthihasChanda/shapeshifter", False, "")],
-        media=dict(kind="wheel"),
+        media=dict(kind="video", src="../assets/videos/shapeshifter.mp4", poster="../assets/videos/shapeshifter.jpg"), detail="wheel",
         stats=[("366", "file types it knows by name, plus anything it can infer from the contents"), ("4,453", "conversions, direct or chained through several steps"), ("Ctrl+Alt+C", "opens the wheel for the selected files")],
         features=[
             ("The wheel", "Right-click › Convert to… or press Ctrl+Alt+C. A wheel of everything the file can become appears under your mouse, spreading over rings when there are many options."),
@@ -236,7 +236,9 @@ def banner_controls(p):
 
 
 def detail_section(p):
-    m = p["media"]
+    m = dict(p["media"])
+    if p.get("detail"):                      # keep a scroll section (e.g. the wheel) even though the banner is a film
+        m["kind"] = p["detail"]
     if m["kind"] == "gallery":
         shots = "".join(
             f'<figure class="shot"><div class="frame"><img src="../assets/lekalu/{n}.jpg" alt="{esc(cap)}" loading="lazy"></div>'

@@ -27,7 +27,7 @@
 
 <main>
   <header class="banner">
-    <div class="bn-media"><svg id="bn-wheel" class="bn-wheel" aria-hidden="true"></svg></div>
+    <div class="bn-media"><div class="bn-poster" style="background-image:url(../assets/videos/shapeshifter.jpg)"></div><video autoplay muted loop playsinline preload="auto" poster="../assets/videos/shapeshifter.jpg"><source src="../assets/videos/shapeshifter.mp4" type="video/mp4"></video></div>
     <div class="bn-scrim"></div><div class="grain"></div>
     <div class="bn-content">
       <div class="wrap">
@@ -40,6 +40,13 @@
           <a class="btn" href="#overview">Details ↓</a>
         </div>
       </div>
+    </div>
+    <div class="bn-ctrl">
+      <button class="cbtn" id="bn-play" aria-label="Play or pause the film"><i class="led"></i>PAUSE</button>
+      <button class="cbtn snd" id="bn-snd" aria-label="Turn sound on or off"><i class="led"></i>SOUND ON</button>
+      <div class="seek" role="slider" aria-label="Seek"><i><b></b></i></div>
+      <span class="tm" id="bn-time">00:00 / 00:00</span>
+      <button class="cbtn" id="bn-full" aria-label="Full screen">FULLSCREEN</button>
     </div>
   </header>
 
