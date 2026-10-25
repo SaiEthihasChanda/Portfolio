@@ -18,6 +18,8 @@ SCHEMES = {
 # The installer is too big for the repo (GitHub's limit is 100 MB per file), so it is attached to a GitHub Release.
 # The installer lives on the shapeshifter repo release. While testing on localhost the button uses the local file.
 DOWNLOAD_URL = "https://github.com/SaiEthihasChanda/shapeshifter/releases/latest/download/ShapeShifter-Setup.exe"
+# Tether's Windows app: attached to a release of the Tether repo.
+TETHER_DOWNLOAD_URL = "https://github.com/SaiEthihasChanda/Tether/releases/latest/download/Tether-Setup.exe"
 
 PROJECTS = [
     dict(
@@ -45,14 +47,14 @@ PROJECTS = [
     ),
     dict(
         slug="tether", name="Tether", num="02",
-        kicker="FILE SYNC · CLI + CLOUD",
-        tagline="Keeps a shared file identical wherever it is pulled. A copy follows the file through moves and renames, undoes local edits until you ask to change it, and sends only the parts that changed.",
-        meta=[("TYPE", "File sync for teams"), ("INSTALL", "npm i -g tether-sync"), ("VERSION", "tether-sync 0.4.0 · Node 22.13+"), ("BUILT WITH", "Firebase (Firestore, Storage, Auth) · React console"), ("STATUS", "Live")],
-        cta=[("Open the console ↗", "https://tether-b10cf.web.app", True, ""), ("CLI reference ↓", "#tref", False, "")],
+        kicker="FILE SYNC · WINDOWS APP + CLI + CLOUD",
+        tagline="Keeps a shared file identical wherever it is pulled. A copy follows the file through moves and renames, undoes local edits until you ask to change it, and sends only the parts that changed. Use the Windows app, or the command line.",
+        meta=[("TYPE", "File sync for teams"), ("INSTALL", "Windows app, or npm i -g tether-sync"), ("VERSION", "Tether 0.7.0 · Windows 10/11 · CLI needs Node 22.13+"), ("BUILT WITH", "Firebase (Firestore, Storage, Auth) · React console"), ("STATUS", "Live")],
+        cta=[("↓ Download for Windows", TETHER_DOWNLOAD_URL, True, "151 MB"), ("Open the console ↗", "https://tether-b10cf.web.app", False, ""), ("CLI reference ↓", "#tref", False, "")],
         media=dict(kind="video", src="../assets/videos/tether.mp4", poster="../assets/videos/tether.jpg"),
         stats=[("1 of 241", "chunks sent after a small edit: 9 KB over the wire"), ("35", "commands, from login to live editing"), ("121", "end-to-end tests with real servers, daemons and browsers")],
         features=[
-            ("A CLI and a background daemon", "The tether command manages files; tetherd keeps them in sync in the background, and can start at login on Windows or with systemd on Linux."),
+            ("An app for everyone, a CLI for developers", "The Windows app has a tray icon, a window and a right-click menu in File Explorer, so nobody needs a terminal. The tether command does the same from the command line. Both use tetherd, the background service that keeps files in sync."),
             ("Follows the file", "Move or rename a managed file and Tether still knows it. If a drive disappears, tether locate re-links the copy by content."),
             ("Delta sync", "Files are split into content-defined chunks and only the missing chunks travel, so a one-line edit stays tiny."),
             ("Edit on purpose, live if you like", "Local edits are undone until you run tether edit. Editors can go live with --realtime: every save reaches everyone within seconds."),
@@ -60,9 +62,9 @@ PROJECTS = [
             ("Git-aware", "Inside a git repo choose keep, follow or skip, so Tether never gets in the way of git status or pulls."),
         ],
         how_title="Try it in a few commands",
-        steps=[("INSTALL", "Install and sign in", "npm i -g tether-sync, then tether login opens a browser sign-in. Needs Node 22.13 or newer."),
-               ("MANAGE", "Put a file under Tether", "tether manage prints a share ID for the file you chose."),
-               ("PULL", "Get it anywhere", "tether pull with that ID creates an identical, managed copy on any other machine.")],
+        steps=[("INSTALL", "Install and sign in", "Run the Windows installer and sign in with your browser. Windows may say it protected your PC because the installer is not code-signed yet: choose More info, then Run anyway. Prefer a terminal? npm i -g tether-sync, then tether login (Node 22.13 or newer)."),
+               ("MANAGE", "Put a file under Tether", "Drag it onto the app, right-click it in File Explorer, or run tether manage. You get a share code."),
+               ("PULL", "Get it anywhere", "Open a share code in the app, or run tether pull with it, to create an identical, managed copy on any other machine.")],
         code=("TERMINAL", '<span class="k">$</span> npm i -g tether-sync\n<span class="k">$</span> tether login\n<span class="k">$</span> tether repo create team\n<span class="k">$</span> tether manage .editorconfig --repo team   <span class="c"># prints a share ID</span>\n<span class="k">$</span> tether pull abcd-efgh-jkmn                   <span class="c"># on another machine</span>'),
         ref=True,
         final="One source of truth.",
@@ -199,7 +201,14 @@ def cta_buttons(p):
         if "downloads/" in href:                       # installer: public link, local file only while developing
             local, href = href, DOWNLOAD_URL
         ext = href.startswith("http") and not local
-        attrs = ' target="_blank" rel="noopener"' if ext else (f' download data-local="{esc(local)}"' if local else ("" if href.startswith("#") else " download"))
+        if local:                                       # installer kept locally while developing
+            attrs = f' download data-local="{esc(local)}"'
+        elif "/releases/latest/download/" in href:     # a file attached to a GitHub Release: download in place
+            attrs = " download"
+        elif ext:
+            attrs = ' target="_blank" rel="noopener"'
+        else:
+            attrs = "" if href.startswith("#") else " download"
         small = f" <small>{esc(note)}</small>" if note else ""
         out.append(f'<a class="btn{" primary" if primary else ""}" href="{esc(href)}"{attrs}>{esc(label)}{small}</a>')
     return "\n          ".join(out)
